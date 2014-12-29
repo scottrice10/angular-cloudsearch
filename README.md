@@ -1,4 +1,6 @@
 angular-search
 ==============
 
-A search application built with Angular JS. Includes typeahead, facets, and did you mean.
+A desktop search application built with Angular JS. Includes typeahead, facets, and did you mean.
+
+This repo is one part of [Imorgo](https://github.com/scottrice10/imorgo), a health insurance exchange search application.
