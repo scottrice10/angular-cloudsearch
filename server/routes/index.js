@@ -33,7 +33,7 @@
           facetsString += '"' + facets[i] + '":{"sort":"bucket", "size":10}';
 
           if(i !== facets.length - 1) {
-            facetsString += ","
+            facetsString += ",";
           }
         }
         facetsString += "}";

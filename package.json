@@ -1,7 +1,7 @@
 {
-  "name": "Angular Search",
+  "name": "AngularCloudsearch",
   "version": "0.1.0",
-  "description": "A search app running Node, Express, Angular, and Cloudsearch",
+  "description": "A search app running Node, Express, AngularJS, and Cloudsearch",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
