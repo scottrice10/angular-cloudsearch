@@ -1,4 +1,4 @@
-angular-search
+angular-cloudsearch
 ==============
 
 A desktop search application built with Angular JS. Includes typeahead, facets, and did you mean.
