@@ -1,12 +1,12 @@
 {
-  "name": "TodoApp",
+  "name": "Angular Search",
   "version": "0.1.0",
-  "description": "A MEAN stack Todo App",
+  "description": "A search app running Node, Express, Angular, and Cloudsearch",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Arvind Ravulavaru",
+  "author": "Scott Rice",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.6.5",
@@ -14,7 +14,7 @@
     "debug": "^1.0.4",
     "ejs": "^1.0.0",
     "express": "^4.8.5",
-    "mongojs": "^0.14.0",
+    "aws-sdk": "*",
     "morgan": "^1.2.3"
   },
   "devDependencies": {
