@@ -9,8 +9,8 @@ gulp.task('default', ['browser-sync'], function() {});
 gulp.task('browser-sync', ['nodemon'], function() {
   browserSync.init(null, {
     proxy: "http://localhost:3000",
-    files:  ['server/**/*.js', 'client/js/*.js'],
-    port: 2000,
+    files:  ['server/**/**', 'client/js/*.js'],
+    port: 2000
   });
 });
 

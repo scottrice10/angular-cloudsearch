@@ -6,7 +6,7 @@
     watch = require('gulp-watch'),
     jshint = require('gulp-jshint'),
     livereload = require('gulp-livereload'),
-    _paths = ['server/**/*.js', 'client/js/*.js'];
+    _paths = ['server/**/**', 'client/js/*.js'];
 
 
   //register nodemon task

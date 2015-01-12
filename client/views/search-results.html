@@ -1,0 +1,121 @@
+<div class="container-fluid app-font">
+	<div class="row">
+        <div id="sort_btn_aligner" ng-show="parsedSearchResults.found > 0" style="margin-top:40px;margin-bottom:50px;">
+            <div class="btn-group btn-group-{{type}} col-sm-6 col-md-6 col-md-offset-2" data-toggle="buttons">
+                <label class="btn btn-warning disabled btn-sm">Sort By :</label>
+                <label  ng-repeat="sortBtn in sortBtns" class="btn btn-primary btn-sm" data-ng-click="doSort(sortBtn['sortVal'])">
+                    {{sortBtn['display']}}
+                    <input type="radio"></label>
+                </label>
+                <label ng-switch on="dataMap['sortDir']" class="btn btn-info btn-sm">
+                    <div ng-switch-when="asc">
+                        <div id="direction" dir="asc" data-ng-click="doDirector('desc')">
+                            <span class="glyphicon glyphicon-arrow-up"></span>
+                        </div>
+                    </div>
+                    <div ng-switch-default>
+                        <div id="direction" dir="desc" data-ng-click="doDirector('asc')">
+                            <span class="glyphicon glyphicon-arrow-down"></span>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:20px;">
+        <div class="col-sm-2 col-md-2 sidebar left-nav colorBg" ng-show="hasFacets()">
+        	<span>
+                <br><br>
+                <div ng-bind="parsedSearchResults.found + ' results found'"></div>
+        	</span>
+
+            <div class="col-lg-12" ng-repeat="item in selectedItems" slide-show="showInput">
+                <a id="item['id']" href="javascript:void(0)" data-ng-click="removeItem($index)" class="btn btn-primary btn-xs col-lg-9 button-wrap">
+                    <span ng-bind-html="item['filterName'] | trust"></span>
+                    <i class="glyphicon glyphicon-remove"></i>
+                </a>
+            </div>
+
+			<span>
+            <div ng-repeat="facet in parsedSearchResults.facets" ng-if="parsedSearchResults.records.length">
+                <h5 style="font-weight: bold" ng-bind="facetMap[facet['name']]['display']"></h5>
+                <rw-slider
+                        range="true"
+                        ng-if="facetMap[facet['name']]['slider']"
+                        values="[0, 0]"
+                        search-name="facet['name']"
+                        search-data="facetMap[facet['name']]['range']"
+                ></rw-slider>
+                <ul>
+                    <li ng-repeat="filter in facet[facet['name']][1]">
+                        <a href data-ng-click="doSearchByFilter(filter, facet['name'])" ng-show="filter['@name']">
+                            <span ng-bind-html="filter['@name'] | trust" forcloudrel="{{filter['#text']}}"
+                                  forcloudtag="{{filter['@name']}}" class="facetText"></span>
+                            ({{filter["#text"]}})
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            </span>
+
+            <div>
+                <span ng-show="parsedSearchResults.found > 0"><div ng-bind-html="tagHtml"></div></span>
+            </div>
+
+            <div>
+                <div ng-bind-html="topHtml"></div>
+            </div>
+
+        </div>
+
+
+        <div class="col-sm-8 col-md-8 col-md-offset-0 main">
+           <div class="row-fluid main-section" ng-show="hasInitAds()">
+                <div class="col-fluid" ng-repeat="advertisement in parsedSearchResults.ads.slice(0,2) track by advertisement['@no']" ng-class="'ads-style'">
+                    <ads-item  adv="advertisement">
+                    </ads-item>
+                </div>
+            </div>
+            <div class="row-fluid main-section">
+                    <div class="col-fluid" ng-repeat="result  in parsedSearchResults.records track by result['@no']" ng-class-odd="'odd'" ng-class-even="'even'">
+                         <content-item  content="result">
+                          </content-item>
+                   </div>
+            </div>
+
+          <div class="row-fluid main-section">
+                <ul class="pagination">
+                    <li ng-class="{active:lnk['pageNo'] == page}"
+                        ng-repeat="lnk in parsedLinks.pages track by lnk['pageName']">
+                        <a href data-ng-click="fetchPage(lnk['pageNo'])"
+                           ng-show="lnk['pageName']">{{lnk["pageName"]}}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="container" ng-show="usersCount == 0">
+                <h3>No Users Found</h3>
+            </div>
+
+            <div class="row-fluid"  ng-show="startedSearch">
+        			<span   ng-show="(parsedSearchResults.found <= 0 )">
+        				Your search for<b> {{query}} </b>did not match any documents...
+            			<br/><br/>
+            		* Suggestions: Make sure all words are spelled correctly.</br>
+                        * Use similar words or synonyms.</br>
+                        * Try more general keywords.
+        			</span>
+            </div>
+        </div>
+
+        <div class="col-sm-2 col-md-2 sidebar right-nav" ng-show="hasMoreAds()">
+
+        	 <div class="col-fluid" ng-repeat="advertisement in parsedSearchResults.ads.slice(2,parsedSearchResults.ads.length) track by advertisement['@no']" ng-class="'ads-style'">
+                 <ads-item  adv="advertisement">
+                 </ads-item>
+             </div>
+
+        </div>
+    </div>
+</div>
