@@ -29,9 +29,7 @@
     })
       .pipe(watch({
         emit: 'all'
-      }))
-      .pipe(jshint())
-      .pipe(jshint.reporter('default'));
+      }));
     watch(_paths, livereload.changed);
   });
 
@@ -42,8 +40,6 @@
       .pipe(jshint.reporter('default'));
   });
 
-
   // The default task (called when you run `gulp` from cli)
   gulp.task('default', ['lint', 'nodemon', 'watch']);
-
 }());
