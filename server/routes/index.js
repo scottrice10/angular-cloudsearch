@@ -17,20 +17,20 @@ router.get('/', function(req, res) {
 router.get('/api/search', function(req, res) {
   var params = {
     query: req.query.q ? req.query.q + "*" : "",
-    facet: function () {
-      var facets = req.query.facets || [];
-      var facetsString = "{";
-      for(var i = 0; i < facets.length; i++) {
-        facetsString += '"' + facets[i] + '":{"sort":"bucket", "size":10}';
-
-        if(i !== facets.length - 1) {
-          facetsString += ",";
-        }
-      }
-      facetsString += "}";
-
-      return facetsString;
-    }(),
+    //facet: function () {
+    //  var facets = req.query.facets || [];
+    //  var facetsString = "{";
+    //  for(var i = 0; i < facets.length; i++) {
+    //    facetsString += '"' + facets[i] + '":{"sort":"bucket", "size":10}';
+    //
+    //    if(i !== facets.length - 1) {
+    //      facetsString += ",";
+    //    }
+    //  }
+    //  facetsString += "}";
+    //
+    //  return facetsString;
+    //}(),
     partial: true,
     queryOptions: '{"defaultOperator": "or"}',
     queryParser: 'simple',
@@ -41,6 +41,7 @@ router.get('/api/search', function(req, res) {
 
   cloudsearchdomain.search(params, function(err, data) {
     if(err) {
+      res.json(err);
       console.log(err, err.stack);
     } else {
       res.json(data);

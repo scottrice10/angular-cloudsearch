@@ -56,7 +56,7 @@ angular.module('searchblox.autocomplete', [])
           index = 0;
         }
         self.index = index;
-        self.selected = self.items[index];
+        self.selected = self.items[index].id;
       };
 
       self.reset();
@@ -65,15 +65,15 @@ angular.module('searchblox.autocomplete', [])
     }
 
     return {
-      restrict: 'A,E',
+      restrict: 'AE',
       require: '?^custominput',
       scope: {source: '&'},
       template: '<div class="autocomplete" ng-show="suggestionList.visible">' +
       '  <ul class="suggestions">' +
-      '    <li class="suggestion" ng-repeat="item in suggestionList.items"' +
-      '                           ng-class="{selected: item == suggestionList.selected}"' +
+      '    <li class="suggestion" ng-repeat="item in suggestionList.items track by item.id"' +
+      '                           ng-class="{selected: item.id === suggestionList.selected}"' +
       '                           ng-click="addSuggestion()"' +
-      '                           ng-mouseenter="suggestionList.select($index)">{{ item }}</li>' +
+      '                           ng-mouseenter="suggestionList.select($index)">{{ item.fields.plan_marketing_name[0] }}</li>' +
       '  </ul>' +
       '</div>',
       link: function(scope, element, attrs, custominput) {
@@ -86,13 +86,16 @@ angular.module('searchblox.autocomplete', [])
         scope.addSuggestion = function() {
           var added = false;
 
-          if(suggestionList.selected) {
-            input.changeValue(suggestionList.selected);
-            suggestionList.reset();
-            input[0].focus();
+          suggestionList.items.forEach(function(entry) {
+            if(entry.id === suggestionList.selected) {
+              input.changeValue(entry.fields.plan_marketing_name[0]);
+              suggestionList.reset();
+              input[0].focus();
 
-            added = true;
-          }
+              added = true;
+            }
+          });
+
           return added;
         };
 

@@ -174,14 +174,13 @@ angular.module('searchblox.service', [])
     }
 
     // retrieves the auto suggestions
-    this.parseAutoSuggestion = function(dataobj) {
+    this.parseAutoSuggestion = function(data) {
       var suggestions = [];
-      for(var i in dataobj[0]) {
-        var value = dataobj[0][i];
-        suggestions.push(value);
-      }
+      data.hits.hit.forEach(function(entry){
+        suggestions.push(entry);
+      });
       return suggestions;
-    }
+    };
 
     function getParam(paramName, urlString) {
       paramName = paramName.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");

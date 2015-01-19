@@ -46,6 +46,8 @@ angular.module('searchblox.controller', [])
           $scope.timer = $timeout(function() {
             $rootScope.$apply(autoSuggestData.resolve(suggtns));
           }, 10);
+        }).catch(function(err){
+          console.log(err);
         });
         return autoSuggestData.promise;
 
