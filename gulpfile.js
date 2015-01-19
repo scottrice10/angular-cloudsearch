@@ -6,7 +6,8 @@
     watch = require('gulp-watch'),
     jshint = require('gulp-jshint'),
     livereload = require('gulp-livereload'),
-    _paths = ['server/**/**', 'client/js/*.js'];
+    _paths = ['server/**/**', 'client/js/*.js'],
+    _lint = ['client/js/*.js'];
 
 
   //register nodemon task
@@ -36,7 +37,7 @@
 
   //lint js files
   gulp.task('lint', function() {
-    gulp.src(_paths)
+    gulp.src(_lint)
       .pipe(jshint())
       .pipe(jshint.reporter('default'));
   });

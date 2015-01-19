@@ -16,9 +16,9 @@ router.get('/', function(req, res) {
 // page={pageNumber}
 router.get('/api/search', function(req, res) {
   var params = {
-    query: req.query.query ? req.query.query + "*" : "",
-    facet: function buildFacet() {
-      var facets = req.query.facets;
+    query: req.query.q ? req.query.q + "*" : "",
+    facet: function () {
+      var facets = req.query.facets || [];
       var facetsString = "{";
       for(var i = 0; i < facets.length; i++) {
         facetsString += '"' + facets[i] + '":{"sort":"bucket", "size":10}';
@@ -34,10 +34,9 @@ router.get('/api/search', function(req, res) {
     partial: true,
     queryOptions: '{"defaultOperator": "or"}',
     queryParser: 'simple',
-    return: 'all_fields',
     size: req.query.size || 10,
-    sort: 'score desc',
-    start: (req.query.page || 0) * this.size
+    //sort: 'score desc',
+    //start: req.query.page ? (req.query.page * this.size) : 0
   };
 
   cloudsearchdomain.search(params, function(err, data) {
