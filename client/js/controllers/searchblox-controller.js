@@ -192,7 +192,7 @@ angular.module('searchblox.controller', [])
 
         $scope.prepareFilters();
         $scope.doSearch();
-      }
+      };
 
       // Function for removing filter
       $scope.removeItem = function(index) {
@@ -215,14 +215,14 @@ angular.module('searchblox.controller', [])
         }
         $scope.filterFields = filters;
         $scope.doSearch();
-      }
+      };
 
       // Function for fetch page results.
       $scope.fetchPage = function(pageNo) {
         $scope.page = pageNo;
         $scope.prevPage = pageNo;
         $scope.doSearch();
-      }
+      };
 
       // check if there is atleast one filter in the facet
       $scope.hasFacets = function() {
@@ -241,28 +241,5 @@ angular.module('searchblox.controller', [])
           }
         }
         return false;
-      }
-
-      // check if there is atleast one filter in the facet
-      $scope.hasInitAds = function() {
-        if($scope.parsedSearchResults !== undefined && $scope.parsedSearchResults !== null
-          && $scope.parsedSearchResults.showAds) {
-          if($scope.parsedSearchResults.ads !== null && typeof($scope.parsedSearchResults.ads) !== "undefined" &&
-            $scope.parsedSearchResults.ads.length >= $scope.initAds) {
-            return true;
-          }
-        }
-        return false;
-      }
-
-      $scope.hasMoreAds = function() {
-        if($scope.parsedSearchResults !== undefined && $scope.parsedSearchResults !== null
-          && $scope.parsedSearchResults.showAds) {
-          if($scope.parsedSearchResults.ads !== null && typeof($scope.parsedSearchResults.ads) !== "undefined" &&
-            $scope.parsedSearchResults.ads.length > $scope.maxAdsLimit) {
-            return true;
-          }
-        }
-        return false;
-      }
+      };
     }]);

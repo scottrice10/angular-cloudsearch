@@ -27,7 +27,6 @@ angular.module('searchbloxModule', [
   'ngRoute',
   'ngSanitize',
   'searchblox.contentItem',
-  'searchblox.adsItem',
   'rw.ui-slider'
 ])
   .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {

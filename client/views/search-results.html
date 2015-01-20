@@ -103,16 +103,5 @@
         			</span>
          </div>
       </div>
-
-      <div class="col-sm-2 col-md-2 sidebar right-nav" ng-show="hasMoreAds()">
-
-         <div class="col-fluid"
-              ng-repeat="advertisement in parsedSearchResults.ads.slice(2,parsedSearchResults.ads.length) track by advertisement['@no']"
-              ng-class="'ads-style'">
-            <ads-item adv="advertisement">
-            </ads-item>
-         </div>
-
-      </div>
    </div>
 </div>
