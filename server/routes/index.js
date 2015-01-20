@@ -34,7 +34,7 @@ router.get('/api/search', function(req, res) {
     partial: true,
     queryOptions: '{"defaultOperator": "or"}',
     queryParser: 'simple',
-    size: req.query.size || 10,
+    size: req.query.limit || 10,
     //sort: 'score desc',
     //start: req.query.page ? (req.query.page * this.size) : 0
   };

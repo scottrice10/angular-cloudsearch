@@ -10,30 +10,20 @@ angular.module('searchblox.controller', [])
       var searchUrl = '/api/search';
       var autoSuggestUrl = searchUrl;
 
-      // Hard coded these values. This needs to be dynamic
-      //var facet = 'on';
-      //var xsl = "json";
       $scope.facetFields = "";
-      // var dateFacet = "";
 
-      $scope.rangeFilter = "";
       $scope.filterFields = "";
       $scope.selectedItems = [];
-      //$scope.sortDir = "desc";
-      // $scope.sortVal = "";
       $scope.from = 0;
       $scope.page = 1;
       $scope.prevPage = 1;
-      //$scope.pageSize = 10;
       $scope.noOfSuggests = 5;
-      //$scope.showAutoSuggest = true;
 
       $scope.paginationHtml = "";
       $scope.tagHtml = "";
       $scope.topHtml = "";
       $scope.startedSearch = false;
       $scope.initAds = 1;
-      $scope.maxAdsLimit = 2;
       $scope.dataMap = new Object();
       $scope.inputClass = {};
       $scope.inputClass.name = "ngCustomInput col-sm-8 col-md-8 col-md-offset-2";
@@ -41,12 +31,12 @@ angular.module('searchblox.controller', [])
       // load autosuggest items
       $scope.loadItems = function(term) {
         var autoSuggestData = $q.defer();
-        searchbloxFactory.getResponseData(autoSuggestUrl + '?limit=' + $scope.noOfSuggests + '&q=' + term).then(function(suggestionResults) {
-          var suggtns = searchbloxService.parseAutoSuggestion(suggestionResults.data);
+        searchbloxFactory.getResponseData(autoSuggestUrl + '?limit=' + $scope.noOfSuggests + '&q=' + term).success(function(suggestionResults) {
+          var suggtns = searchbloxService.parseAutoSuggestion(suggestionResults);
           $scope.timer = $timeout(function() {
             $rootScope.$apply(autoSuggestData.resolve(suggtns));
           }, 10);
-        }).catch(function(err){
+        }).error(function(err){
           console.log(err);
         });
         return autoSuggestData.promise;
@@ -58,132 +48,52 @@ angular.module('searchblox.controller', [])
         facetFactory.get().$promise.then(function(data) {
           if(data !== null) {
             $scope.startedSearch = true;
-            if(typeof($scope.dataMap['facetFields']) == "undefined" || $scope.dataMap['facetFields'] == null || $scope.dataMap['facetFields'] == "") {
-              $scope.dataMap['facetFields'] = searchbloxService.getFacetFields(data.facets);
-              $scope.facetMap = searchbloxService.facetFieldsMap;
-            }
-
-            if(typeof($scope.dataMap['sortVal']) == "undefined" || $scope.dataMap['sortVal'] == null || $scope.dataMap['sortVal'].trim() == "" || !searchbloxService.sortBtnExists($scope.dataMap['sortVal'].trim())) {
-              $scope.sortBtns = searchbloxService.getSortBtns(data.sortBtns);
-            }
-
-            if(typeof($scope.dataMap['collectionString']) == "undefined" || $scope.dataMap['collectionString'] == null || $scope.dataMap['collectionString'] === "") {
-              $scope.dataMap['collectionString'] = searchbloxService.getCollectionValues(data.collection);
-            }
-
-            if(typeof($scope.dataMap['collectionForAds']) == "undefined" || $scope.dataMap['collectionForAds'] == null || $scope.dataMap['collectionForAds'] === "") {
-              $scope.dataMap['collectionForAds'] = data.collectionForAds;
-            }
-
-            if(typeof($scope.dataMap['matchAny']) == "undefined" || $scope.dataMap['matchAny'] == null) {
-              $scope.dataMap['matchAny'] = data.matchAny;
-            }
-
-            if(typeof($scope.dataMap['sortDir']) == "undefined" || $scope.dataMap['sortDir'] == null) {
-              $scope.dataMap['sortDir'] = data.sortDir;
-            }
-
-            if(typeof($scope.dataMap['pageSize']) == "undefined" || $scope.dataMap['pageSize'] == null) {
-              $scope.dataMap['pageSize'] = data.pageSize;
-            }
-
-            if(typeof($scope.dataMap['filter']) == "undefined" || $scope.dataMap['filter'] == null) {
-              $scope.dataMap['filter'] = data.filter;
-            }
-
-            if(typeof($scope.dataMap['startDate']) == "undefined" || $scope.dataMap['startDate'] == null) {
-              if((data.startDate !== undefined) && data.startDate !== null) {
-                $scope.dataMap['startDate'] = moment(data.startDate, 'MM-DD-YYYY').format("YYYYMMDDHHmmss");
-              }
-            }
-
-            if(typeof($scope.dataMap['endDate']) == "undefined" || $scope.dataMap['endDate'] == null) {
-              if((data.endDate !== undefined) && data.endDate !== null) {
-                $scope.dataMap['endDate'] = moment(data.endDate, 'MM-DD-YYYY').format("YYYYMMDDHHmmss");
-              }
-            }
 
             if(typeof($scope.showAutoSuggest) == "undefined" || $scope.showAutoSuggest == null) {
               $scope.showAutoSuggest = data.showAutoSuggest;
             }
-
-
-            $scope.dataMap['facet'] = 'on';
-            $scope.dataMap['xsl'] = "json";
-
           }
         });
-      }
+      };
 
       $scope.startSearch = function() {
         $scope.from = 0;
         $scope.page = 1;
         $scope.prevPage = 1;
         $scope.doSearch();
-      }
+      };
+
       // Search function
       $scope.doSearch = function() {
 
-        var urlParams = searchbloxService.getUrlParams(searchUrl, $scope.query,
-          $scope.rangeFilter, $scope.filterFields, $scope.page, $scope.dataMap);
-        searchbloxFactory.getResponseData(urlParams).then(function(searchResults) {
-          $scope.parsedSearchResults = searchbloxService.parseResults(searchResults.data, $scope.facetMap, $scope.dataMap);
-          $scope.parsedLinks = searchbloxService.parseLinks(searchResults.data, $scope.facetMap);
+        var urlParams = searchbloxService.getUrlParams(searchUrl, $scope.query);
+        searchbloxFactory.getResponseData(urlParams).success(function(searchResults) {
+          $scope.parsedSearchResults = searchbloxService.parseResults(searchResults);
+          $scope.parsedLinks = searchbloxService.parseLinks(searchResults);
           $scope.startedSearch = true;
           $scope.inputClass.name = "ngCustomInput col-sm-6 col-md-6 col-md-offset-2";
+        }).error(function(err){
+          console.log(err);
         });
-      }
+      };
 
       // Sort function
       $scope.doSort = function(sortVal) {
         $scope.dataMap['sortVal'] = sortVal;
         $scope.doSearch();
-      }
+      };
 
       // Sort function
       $scope.doDirector = function(direction) {
         $scope.dataMap['sortDir'] = direction;
         $scope.doSearch();
-      }
-
-      // get tagcloud
-      $scope.getTagCloud = function() {
-        var taghtml = "<h3>Most Used Tags</h3></br><div id='facettagcloud'>";
-        if($scope.parsedSearchResults.facets != undefined && $scope.parsedSearchResults.facets != null && $scope.parsedSearchResults.facets[2].keywords != undefined && $scope.parsedSearchResults.facets[2].keywords != null)
-          for(var a in $scope.parsedSearchResults.facets[2].keywords[1]) {
-            var value = $scope.parsedSearchResults.facets[2].keywords[1][a];
-            taghtml += "<a href='index.html?query=" + value['@name'] + "' tagrel='" + value['#text'] + "'>" + value['@name'] + " </a>";
-          }
-        taghtml += "</div>";
-        $scope.tagHtml = $sce.trustAsHtml(taghtml);
-        var list = document.getElementById("facettagcloud");
-        if(list != undefined && list.childNodes.length > 0) {
-          shuffleNodes(list);
-          $.fn.tagcloud.defaults = {
-            size: {start: 14, end: 18, unit: 'pt'},
-            color: {start: '#cde', end: '#f52'}
-          };
-          $(function() {
-            $('#facettagcloud a').tagcloud();
-          });
-        }
-      }
+      };
 
       // adjust how many results are shown
       $scope.howmany = function() {
         var newhowmany = prompt('Currently displaying ' + $scope.pageSize + ' results per page. How many would you like instead?');
         if(newhowmany) {
           $scope.pageSize = parseInt(newhowmany);
-          $scope.from = 0;
-          $scope.dosearch();
-        }
-      }
-
-      // adjust how many suggestions are shown
-      var howmanynofsuggest = function() {
-        var newhowmany = prompt('Currently displaying ' + $scope.noOfSuggests + ' suggestions per page. How many would you like instead?');
-        if(newhowmany) {
-          $scope.noOfSuggests = parseInt(newhowmany);
           $scope.from = 0;
           $scope.dosearch();
         }

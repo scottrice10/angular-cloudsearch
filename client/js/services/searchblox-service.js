@@ -6,14 +6,7 @@
 angular.module('searchblox.service', [])
   .service('searchbloxService', ['$rootScope', function($rootScope) {
 
-    var noffilters;
     this.facetFieldsMap = new Object();
-    //this.sortBtns = new Object();
-    //this.collectionArray = new Array();
-
-    function isBlank(strValue) {
-      return (!strValue || /^\s*$/.test(strValue));
-    }
 
     /**
      * Function for reading facet.json file
@@ -73,7 +66,7 @@ angular.module('searchblox.service', [])
       return values;
       //this.sortBtns = values;
       // return field;
-    }
+    };
 
     /**
      * Function for reading collection values from facet.json
@@ -88,7 +81,7 @@ angular.module('searchblox.service', [])
       }
       //  this.collectionArray = values;
       return collectionString;
-    }
+    };
 
     /**
      * Function to check if the sort value is valid
@@ -98,75 +91,18 @@ angular.module('searchblox.service', [])
         if(sortVal == i) return true;
       }
       return false;
-    }
+    };
 
     // function for generating url
-    this.getUrlParams = function(url, query, rangeFilter, filterFields, page, dataMap) {
+    this.getUrlParams = function(url, query) {
       var urlParam = url;
 
       if(typeof(query) !== "undefined" && query !== null) {
-        if(dataMap['matchAny'].toUpperCase() === "ON") {
-          urlParam = urlParam + "?q_low=" + queryStringForMatchAny(query) + "&st=adv&q_all=&q_phr=&q_not=&oc=all";
-        } else {
-          urlParam = urlParam + "?&query=" + encodeURIComponent(query);
-        }
+        urlParam = urlParam + "?&q=" + encodeURIComponent(query);
       }
 
-      if(typeof(dataMap['facet']) !== "undefined" && dataMap['facet'] !== null) {
-        urlParam = urlParam + "&facet=" + dataMap['facet'];
-      }
-
-      if(typeof(dataMap['xsl']) !== "undefined" && dataMap['xsl'] !== null) {
-        urlParam = urlParam + "&xsl=" + dataMap['xsl'];
-      }
-
-      if(typeof( dataMap['facetFields']) !== "undefined" && dataMap['facetFields'] !== null) {
-        urlParam = urlParam + dataMap['facetFields'];
-      }
-
-      if(typeof(dataMap['sortDir']) !== "undefined" && dataMap['sortDir'] !== null && (dataMap['sortDir'] == "asc" || dataMap['sortDir'] == "desc")) {
-        urlParam = urlParam + "&sortdir=" + dataMap['sortDir'];
-      } else {
-        urlParam = urlParam + "&sortdir=desc";
-      }
-
-      if(typeof(dataMap['sortVal']) !== "undefined" && dataMap['sortVal'] !== null && !isBlank(dataMap['sortVal'])) {
-        urlParam = urlParam + "&sort=" + dataMap['sortVal'];
-      }
-
-      if(typeof(page) !== "undefined" && page !== null && !isNaN(page)) {
-        urlParam = urlParam + "&page=" + page;
-      }
-
-      if(typeof(dataMap['pageSize']) !== "undefined" && dataMap['pageSize'] !== null && !isNaN(dataMap['pageSize'])) {
-        urlParam = urlParam + "&pagesize=" + dataMap['pageSize'];
-      }
-
-      if(typeof( rangeFilter) !== "undefined" && rangeFilter !== null && !isBlank(rangeFilter)) {
-        urlParam = urlParam + rangeFilter;
-      }
-
-      if(typeof( filterFields) !== "undefined" && filterFields !== null && !isBlank(filterFields)) {
-        urlParam = urlParam + filterFields;
-      }
-
-      if(typeof( dataMap['collectionString']) !== "undefined" && dataMap['collectionString'] !== null && !isBlank(dataMap['collectionString'])) {
-        urlParam = urlParam + dataMap['collectionString'];
-      }
-
-      if(typeof( dataMap['filter']) !== "undefined" && dataMap['filter'] !== null && !isBlank(dataMap['filter'])) {
-        urlParam = urlParam + "&filter=" + dataMap['filter'];
-      }
-
-      if(typeof( dataMap['startDate']) !== "undefined" && dataMap['startDate'] !== null && !isBlank(dataMap['startDate'])) {
-        urlParam = urlParam + "&startdate=" + dataMap['startDate'];
-      }
-
-      if(typeof( dataMap['endDate']) !== "undefined" && dataMap['endDate'] !== null && !isBlank(dataMap['endDate'])) {
-        urlParam = urlParam + "&enddate=" + dataMap['endDate'];
-      }
       return urlParam;
-    }
+    };
 
     function queryStringForMatchAny(queryString) {
       queryString = queryString.replace(/^\s+|\s+$/g, '').split(/[ ]+/).join('+');
@@ -176,7 +112,7 @@ angular.module('searchblox.service', [])
     // retrieves the auto suggestions
     this.parseAutoSuggestion = function(data) {
       var suggestions = [];
-      data.hits.hit.forEach(function(entry){
+      data.hits.hit.forEach(function(entry) {
         suggestions.push(entry);
       });
       return suggestions;
@@ -264,57 +200,6 @@ angular.module('searchblox.service', [])
       return false;
     }
 
-    function computeResult(result) {
-      var computedResult = new Object();
-      computedResult = angular.copy(result);
-      var recstr = JSON.stringify(result.url);
-      var colid = result.col;
-      recstr = recstr.substring(1, recstr.length - 1);
-      var recstrf = recstr.substring(1, recstr.length);
-      var t = recstr.substring(recstr.lastIndexOf('.') + 1).toLowerCase();
-      var isImage = false;
-      var isVideo = false;
-
-      if(recstr.startsWith('http') || recstr.startsWith('https')) {
-        if(t == "jpg" || t == "jpeg" || t == "png" || t == "gif" || t == "bmp") {
-          isImage = true;
-        } else if(t == "mpeg" || t == "mp4" || t == "flv" || t == "mpg") {
-          isVideo = true;
-        }
-        computedResult.contentUrl = recstr;
-      } else if(recstr.startsWith('/') || recstrf.startsWith(':')) {
-        if(t == "jpg" || t == "jpeg" || t == "png" || t == "gif" || t == "bmp") {
-          var isImage = true;
-
-        } else if(t == "mpeg" || t == "mp4" || t == "flv" || t == "mpg") {
-          isVideo = true;
-        }
-        computedResult.contentUrl = '../servlet/FileServlet?url=' + recstr + '&col=' + colid;
-        if(result.url.lastIndexOf('http', 0) === 0) {
-          computedResult.contentUrl = result.url;
-        }
-      }
-      else if(result.url.lastIndexOf('db', 0) === 0) {
-        computedResult.contentUrl = '../servlet/DBServlet?col=' + result.col + '&id=' + result.uid;
-      }
-      else if(result.url.split(':')[0] == 'eml') {
-        computedResult.contentUrl = '../servlet/EmailViewer?url=' + result.uid + '&col=' + result.col;
-      }
-      else {
-        computedResult.contentUrl = result.url;
-      }
-
-      if(isImage) {
-        computedResult.contentNature = "image";
-      }
-      else if(isVideo) {
-        computedResult.contentNature = "video";
-      } else {
-        computedResult.contentNature = "href";
-      }
-      return computedResult;
-    }
-
     function computeAdsResult(result) {
       var computedResult = new Object();
       computedResult = angular.copy(result);
@@ -338,141 +223,18 @@ angular.module('searchblox.service', [])
     // Moved this functions from old code to here to perform search
     // read the result object and return useful vals depending on if ES or SOLR
     // returns an object that contains things like ["data"] and ["facets"]
-    this.parseResults = function(dataobj, facetFieldsMap, dataMap) {
+    this.parseResults = function(dataobj) {
       var resultobj = new Object();
       resultobj["records"] = new Array();
       resultobj["start"] = "";
       resultobj["found"] = "0";
-      resultobj["showAds"] = false;
-      if(typeof(dataobj.results) !== "undefined" && typeof(dataobj.results.result) !== "undefined") {
-        for(var item in dataobj.results.result) {
-          if(item == "@no") {
-            resultobj["records"].push(computeResult(dataobj.results.result));
-            resultobj["found"] = dataobj.results['@hits'];
-            break;
-          }
-          resultobj["records"].push(computeResult(dataobj.results.result[item]));
-          resultobj["found"] = dataobj.results['@hits'];
-        }
-      }
-      if(dataobj.ads !== null && typeof(dataobj.ads) !== "undefined") {
-        resultobj["ads"] = new Array();
-        var adsArray = new Array();
-        adsArray = getAds(dataobj.ads);
-        for(var item in adsArray) {
-          resultobj["ads"].push(computeAdsResult(adsArray[item]));// = getAds(dataobj.ads);
-        }
-      }
-      if(typeof( dataMap['collectionForAds']) !== "undefined" && dataMap['collectionForAds'] !== null) {
-        resultobj["showAds"] = showAds(dataobj.searchform.collections, dataMap['collectionForAds']);
+      if(typeof(dataobj.hits) !== "undefined" && typeof(dataobj.hits.hit) !== "undefined") {
+        dataobj.hits.hit.forEach(function(item) {
+          resultobj["records"].push(item);
+          resultobj["found"] = item.found;
+        });
       }
 
-      if(typeof(dataobj.facets) !== "undefined") {
-        if(dataobj.facets) {
-          resultobj["facets"] = new Object();
-          if(dataobj.facets.facet) {
-            var fname = "";
-            var count = "";
-            var facetsobj = new Object();
-            for(var item in dataobj.facets.facet) {
-              var values = new Object();
-              if(item == "@name")
-                fname = dataobj.facets.facet[item];
-              else if(item == "@count")
-                count = dataobj.facets.facet[item];
-              else if(item == "int") {
-                for(var thing in dataobj.facets.facet[item]) {
-                  values[thing] = dataobj.facets.facet[item][thing];
-                }
-                facetsobj[fname] = new Object();
-                facetsobj['name'] = fname;
-                facetsobj[fname] = [count, values];
-              }
-            }
-            resultobj["facets"][0] = facetsobj;
-            this.noffilters = 1;
-          }
-          else {
-            var n = 0;
-            for(n in dataobj.facets) {
-              var fname = "";
-              var count = "";
-              var facetsobj = new Object();
-              for(var item in dataobj.facets[n]) {
-                var values = new Object();
-                if(item == "@name") {
-                  fname = dataobj.facets[n][item];
-
-                  if(fname === "lastmodified")//|| fname==="size"
-                  {
-                    facetsobj[fname] = new Object();
-                    //alert(JSON.stringify(dataobj.facets[n]['int']));
-                    for(var t1 in dataobj.facets[n]['int']) {
-                      var data = new Array();
-                      data[0] = dataobj.facets[n]['int'][t1]['@from'];
-                      data[1] = dataobj.facets[n]['int'][t1]['@to'];
-                      data[2] = dataobj.facets[n]['int'][t1]['#text'];
-                      facetsobj[fname][t1] = data;
-                    }
-                    //alert(JSON.stringify(facetsobj[fname]));
-                  }
-                }
-                else if(item == "@count")
-                  count = dataobj.facets[n][item];
-                else if(item == "int") {
-                  for(var thing in dataobj.facets[n][item]) {
-                    if(thing == '@name') {
-                      values['0'] = dataobj.facets[n]['int'];
-                      break;
-                    }
-
-                    var filterRange = facetFieldsMap[fname]["range"];
-                    var filterDateRange = facetFieldsMap[fname]["dateRange"];
-                    // Handle  range logic
-                    if(filterRange !== null && filterRange !== undefined) {
-                      var valueObject = dataobj.facets[n][item][thing];
-                      // check if this fname is a range field
-                      // handle range field
-                      for(var r in filterRange) {
-                        if(filterRange[r]["from"] === valueObject["@from"] && filterRange[r]["to"] === valueObject["@to"]) {
-                          valueObject["@name"] = filterRange[r]["name"];
-                          break;
-                        }
-                      }
-                      values[thing] = valueObject;
-                    }
-                    // Handle date range logic
-                    else if(filterDateRange !== null && filterDateRange !== undefined) {
-                      var valueObject = dataobj.facets[n][item][thing];
-                      // check if this fname is a range field
-                      // handle range field
-                      for(r in filterDateRange) {
-                        var dateValue = moment().subtract(filterDateRange[r]["calendar"], filterDateRange[r]["value"]).format("YYYY-MM-DD")
-                        if(valueObject["@from"].startsWith(dateValue))// if (startsWith(valueObject["@from"], dateValue))
-                        {
-                          valueObject["@name"] = filterDateRange[r]["name"];
-                          valueObject["@calendar"] = filterDateRange[r]["calendar"];
-                          valueObject["@value"] = filterDateRange[r]["value"];
-                          break;
-                        }
-                      }
-                      values[thing] = valueObject;
-                    }
-                    else {
-                      values[thing] = dataobj.facets[n][item][thing];
-                    }
-                  }
-                  facetsobj[fname] = new Object();
-                  facetsobj['name'] = fname;
-                  facetsobj[fname] = [count, values];
-                }
-              }
-              resultobj["facets"][n] = facetsobj;
-            }
-            this.noffilters = n;
-          }
-        }
-      }
       return resultobj;
     }
   }]);

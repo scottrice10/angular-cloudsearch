@@ -42,16 +42,6 @@ angular.module('searchblox.custominput', [])
       '           placeholder="search term"' +
       '           ng-model="searchParam"' +
       '           ng-change="newTagChange()">' +
-      '    <span class="input-group-btn">' +
-      '    <a data-toggle="dropdown" class="btn btn-primary dropdown-toggle" href="#">' +
-      '        <i class="glyphicon glyphicon-cog"></i>' +
-      '        <span class="caret"></span></a>' +
-      '    <ul class="dropdown-menu">' +
-      '        <li><a href data-ng-click="partialMatch()" >partial match</a></li>' +
-      '        <li><a href data-ng-click="exactMatch()">exact match</a></li>' +
-      '        <li><a href data-ng-click="fuzzyMatch()">fuzzy match</a></li>' +
-      '        <li><a href data-ng-click="matchAll()">match all</a></li>' +
-      '    </ul>' +
       '</span>' +
       ' </div>' +
       '<div ng-transclude></div>' +

@@ -1,59 +1,65 @@
 /* Styles go here */
-.border
-{
-    border:1px solid transparent;
-}
-.left-nav
-{
-    border-radius: 6px;
-    word-wrap: break-word;
-    white-space: normal;
-    border:1px solid #dddddd;
+body {
+   margin-bottom:50px;
 }
 
-.right-nav
-{
-    word-wrap: break-word;
-    white-space: normal;
-    border-left:1px solid #dddddd;
+.border {
+   border: 1px solid transparent;
 }
 
-.button-wrap{
-    white-space:normal;
-    margin-top:3px;
-    margin-bottom:3px;
+.left-nav {
+   border-radius: 6px;
+   word-wrap: break-word;
+   white-space: normal;
+   border: 1px solid #dddddd;
 }
-.wrap-text{
-    word-wrap: break-word;
-    white-space: normal;
+
+.right-nav {
+   word-wrap: break-word;
+   white-space: normal;
+   border-left: 1px solid #dddddd;
 }
-.main-section{
-    width:730px;
+
+.button-wrap {
+   white-space: normal;
+   margin-top: 3px;
+   margin-bottom: 3px;
 }
+
+.wrap-text {
+   word-wrap: break-word;
+   white-space: normal;
+}
+
+.main-section {
+   width: 730px;
+}
+
 .centered {
-    margin-left: 350px;
+   margin-left: 350px;
 }
 
 .ads-style {
-    background-color: #EEF1FA;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left:5px;
-    padding-right:5px;
-    margin-bottom: 1px;
+   background-color: #EEF1FA;
+   padding-top: 10px;
+   padding-bottom: 10px;
+   padding-left: 5px;
+   padding-right: 5px;
+   margin-bottom: 1px;
 }
 
 .odd {
-    background-color:transparent;
-    margin-bottom: 12px;
-    margin-top: 12px;
+   background-color: transparent;
+   margin-bottom: 12px;
+   margin-top: 12px;
 }
+
 .even {
-    background-color:#f2f2f2;
-    border-bottom:1px solid #dddddd;
-    border-top:1px solid #dddddd;
-    margin-bottom: 12px;
-    margin-top: 12px;
+   background-color: #f2f2f2;
+   border-bottom: 1px solid #dddddd;
+   border-top: 1px solid #dddddd;
+   margin-bottom: 12px;
+   margin-top: 12px;
 
 }
 
@@ -61,28 +67,47 @@
     word-wrap: break-word;
     white-space: normal;
 }*/
-.app-font{
-    margin: 0;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 13px;
-    line-height: 18px;
-    color: #333333;
-    background-color: #ffffff;
+.app-font {
+   margin: 0;
+   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+   font-size: 13px;
+   line-height: 18px;
+   color: #333333;
+   background-color: #ffffff;
+}
+
+#footer {
+   height: 50px;
+   bottom: 0px;
+   left: 0px;
+   right: 0px;
+   margin-top: 30px;
 }
 
 /*screen-xs*/
 @media (max-width: 768px) {
-    .colorBg{background-color:#f2f2f2;}
+   .colorBg {
+      background-color: #f2f2f2;
+   }
 }
+
 /*screen-sm*/
 @media (min-width: 768px) and (max-width: 992px) {
-    .colorBg{background-color:#f2f2f2;}
+   .colorBg {
+      background-color: #f2f2f2;
+   }
 }
+
 /*screen-md*/
 @media (min-width: 992px) and (max-width: 1200px) {
-    .colorBg{background-color:#f2f2f2;}
+   .colorBg {
+      background-color: #f2f2f2;
+   }
 }
+
 /*screen-lg corresponds with col-lg*/
 @media (min-width: 1200px) {
-    .colorBg{background-color:#f2f2f2;}
+   .colorBg {
+      background-color: #f2f2f2;
+   }
 }

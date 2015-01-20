@@ -1,22 +1,11 @@
 <div class="row-fluid">
-    <a href="{{url}}" target="_blank"><b>{{content.title}}</b></a>
+    <a href="{{url}}" target="_blank"><b>{{content.fields.plan_marketing_name[0]}}</b></a>
 </div>
 
 <div class="row-fluid">
-    <div ng-switch on="content.context">
-        <div ng-switch-when="undefined" ng-show="content.description">
-            {{content.description}}
-        </div>
-        <div ng-switch-default>
-             <span ng-repeat="text in formatData(content.context['#text']) track by $index">
-                 ...{{text}} <b>{{formatData(content.context.highlight)[$index]}}</b>
-             </span>
+    <div>
+        <div ng-show="content.fields.issuer_name[0]">
+            {{content.fields.issuer_name[0]}}
         </div>
     </div>
-</div>
-
-<div class="row-fluid">
-    <i>
-        {{getLastModified(content.lastmodified)}}
-    </i>
 </div>
