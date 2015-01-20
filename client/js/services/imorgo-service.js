@@ -18,7 +18,7 @@ angular.module('imorgo.service', [])
         urlParam = urlParam + "&facets=" + encodeURIComponent(facets);
       }
 
-      if(typeof(filterFields) !== "undefined" && filterFields !== null) {
+      if(filterFields && filterFields.length > 0) {
         urlParam = urlParam + "&filters=" + encodeURIComponent(JSON.stringify(filterFields));
       }
 

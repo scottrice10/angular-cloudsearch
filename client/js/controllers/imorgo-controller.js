@@ -110,7 +110,16 @@ angular.module('imorgo.controller', [])
       $scope.doSearchByFilter = function(term, value) {
         $scope.page = 1;
         $scope.checked[value] = !$scope.checked[value];
-        $scope.filterFields.push({term : term, value: value});
+
+        if($scope.checked[value]){
+          $scope.filterFields.push({term : term, value: value});
+        } else {
+          $scope.filterFields.forEach(function(filter, i){
+            if(filter.value == value){
+              $scope.filterFields.splice(i, 1);
+            }
+          })
+        }
 
         $scope.doSearch($scope.filterFields);
       };
