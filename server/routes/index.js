@@ -15,13 +15,43 @@ router.get('/', function(req, res) {
 // size={numberResultsReturnedPerRequest}&
 // page={pageNumber}
 router.get('/api/search', function(req, res) {
-  var params = {
-    query: req.query.q ? req.query.q + "*" : "",
-    partial: true,
-    queryOptions: '{"defaultOperator": "or"}',
-    queryParser: 'simple',
-    size: req.query.limit || 10
-  };
+  var params = {};
+  params.size = req.query.limit || 10;
+  params.partial = true;
+
+  if(typeof req.query.q === "undefined" || req.query.fields){
+    params = {
+      queryOptions: '{"defaultOperator": "or"}',
+      queryParser: 'structured'
+    };
+
+    params.query= function(){
+      var queryString = "( ";
+      if(req.query.q){
+        queryString += "prefix '" + req.query.q + "' ";
+      } else {
+        queryString += "matchall";
+      }
+
+      if(req.query.fields){
+        var fieldsArray = req.query.fields.split(",");
+        queryString += "(or ";
+        fieldsArray.forEach(function(field){
+          queryString += "(term field=" + field.term + "'" + field.value + "')"
+        });
+        queryString += ")"
+      }
+
+      queryString += ")";
+      return queryString;
+    }();
+  } else {
+    params = {
+      query: req.query.q + "*",
+      queryOptions: '{"defaultOperator": "or"}',
+      queryParser: 'simple'
+    };
+  }
 
   // only add facets to params if params sent in request
   if(typeof req.query.facets !== "undefined"){

@@ -25,18 +25,10 @@
    </div>
 
    <div class="row" style="margin-top:20px;">
-      <div class="col-sm-2 col-md-2 sidebar left-nav colorBg" ng-show="hasFacets()">
+      <div class="col-sm-2 col-md-2 sidebar left-nav colorBg" ng-show="hasFacets()" style="padding-top: 20px;">
         	<span>
-             <br><br>
              <div ng-bind="parsedSearchResults.found + ' results found'"></div>
         	</span>
-
-         <div class="col-lg-12" ng-repeat="item in selectedItems" slide-show="showInput">
-            <a id="item['id']" href="javascript:void(0)" data-ng-click="removeItem($index)" class="btn btn-primary btn-xs col-lg-9 button-wrap">
-               <span ng-bind-html="item['filterName'] | trust"></span>
-               <i class="glyphicon glyphicon-remove"></i>
-            </a>
-         </div>
 
 			<span>
             <div ng-repeat="(facet,object) in parsedSearchResults.facets" ng-if="parsedSearchResults.records.length">
@@ -44,7 +36,7 @@
                <ul>
                   <li ng-repeat="item in object.buckets">
                      <input type="checkbox">
-                     <a href data-ng-click="doSearchByFilter(filter, item.value)" ng-show="item.value">
+                     <a href data-ng-click="doSearchByFilter(facet, item.value)" ng-show="item.value">
                         <span ng-bind-html="item.value | trust" class="facetText"></span>
                         ({{item.count}})
                      </a>

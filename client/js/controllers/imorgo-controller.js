@@ -47,13 +47,16 @@ angular.module('imorgo.controller', [])
             $scope.startedSearch = true;
             $scope.facetMap = data;
             $scope.facetFields = [];
-            $scope.facetMap.facets.forEach(function(facet){
+            $scope.facetMap.facets.forEach(function(facet) {
               $scope.facetFields.push(facet.field);
             });
 
             if(typeof($scope.showAutoSuggest) == "undefined" || $scope.showAutoSuggest == null) {
               $scope.showAutoSuggest = data.showAutoSuggest;
             }
+
+            // init
+            $scope.doSearch()
           }
         });
       };
@@ -102,7 +105,7 @@ angular.module('imorgo.controller', [])
       };
 
       // Function for search by filter.
-      $scope.doSearchByFilter = function(filter, facetName, rSlider) {
+      $scope.doSearchByFilter = function(filter, facetName) {
         $scope.page = 1;
 
         var filters = "",
@@ -193,29 +196,6 @@ angular.module('imorgo.controller', [])
         };
 
         $scope.prepareFilters();
-        $scope.doSearch();
-      };
-
-      // Function for removing filter
-      $scope.removeItem = function(index) {
-        var selected_object = $scope.selectedItems[index];
-        $scope.page = selected_object['pageNo']
-        $scope.selectedItems.splice(index, 1);
-        var filters = "";
-        for(var i = 0, l = $scope.selectedItems.length; i < l; i++) { // for(var obj in $scope.selectedItems){
-          var obj = $scope.selectedItems[i];
-          if(obj['filterRangeFrom'] !== undefined && obj['filterRangeTo'] !== undefined) {
-            filters = filters + '&f.' + obj['facetName'] + '.filter=[' + obj['filterRangeFrom'] + 'TO' + obj['filterRangeTo'] + ']';
-          }
-          else if(obj['filterRangeCalendar'] !== undefined && obj['filterRangeValue'] !== undefined) {
-            filters = filters + '&f.' + obj['facetName'] + '.filter=[' + moment().subtract(obj['filterRangeCalendar'], obj['filterRangeValue']).format("YYYY-MM-DDTHH:mm:ss") + 'TO*]';
-          }
-          else {
-            filters = filters + "&f." + obj['facetName'] + ".filter=" + obj['filterName'];
-          }
-          // console.log("Remove Item In loop " + obj['filterName'] + " -- " + obj['facetName']);
-        }
-        $scope.filterFields = filters;
         $scope.doSearch();
       };
 
