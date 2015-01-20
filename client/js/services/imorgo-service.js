@@ -3,8 +3,8 @@
  */
 
 //SERVICE
-angular.module('searchblox.service', [])
-  .service('searchbloxService', ['$rootScope', function($rootScope) {
+angular.module('imorgo.service', [])
+  .service('imorgoService', ['$rootScope', function($rootScope) {
 
     this.facetFieldsMap = new Object();
 
@@ -94,20 +94,19 @@ angular.module('searchblox.service', [])
     };
 
     // function for generating url
-    this.getUrlParams = function(url, query) {
+    this.getUrlParams = function(url, query, facets) {
       var urlParam = url;
 
       if(typeof(query) !== "undefined" && query !== null) {
         urlParam = urlParam + "?&q=" + encodeURIComponent(query);
       }
 
+      if(typeof(facets) !== "undefined" && facets !== null) {
+        urlParam = urlParam + "&facets=" + encodeURIComponent(facets);
+      }
+
       return urlParam;
     };
-
-    function queryStringForMatchAny(queryString) {
-      queryString = queryString.replace(/^\s+|\s+$/g, '').split(/[ ]+/).join('+');
-      return queryString;
-    }
 
     // retrieves the auto suggestions
     this.parseAutoSuggestion = function(data) {
@@ -155,69 +154,6 @@ angular.module('searchblox.service', [])
         }
       }
       return resultobj;
-    }
-
-    // return array of advertisements
-    function getAds(adsObj) {
-      if(!angular.isArray(adsObj)) {
-        if(adsObj.ad !== null && typeof(adsObj.ad) !== "undefined") {
-          return [adsObj.ad];
-        }
-        return [adsObj];
-      }
-      else
-        return adsObj;
-    }
-
-    // return array of Collections
-    function getCollectionList(colObj) {
-      if(!angular.isArray(colObj)) {
-        if(colObj.ad !== null && typeof(colObj.collection) !== "undefined") {
-          return [colObj.collection];
-        }
-        return [colObj];
-      }
-      else
-        return colObj;
-    }
-
-    /**
-     * Check if id's listed in collectionForAds are in the CollectionList
-     * **/
-    function showAds(colObj, colAds) {
-      var colList = new Array();
-      colList = getCollectionList(colObj);
-      if(colAds !== null && colAds.length == 0) {
-        return true;
-      }
-      for(var col in colList) {
-        for(var ad in colAds) {
-          if(colList[col]['@id'] == colAds[ad] && colList[col]['@checked'] == "true") {
-            return true;
-          }
-        }
-      }
-      return false;
-    }
-
-    function computeAdsResult(result) {
-      var computedResult = new Object();
-      computedResult = angular.copy(result);
-      var recstr = JSON.stringify(result['@url']);
-
-      var colid = result.col;
-      recstr = recstr.substring(1, recstr.length - 1);
-      var t = recstr.substring(recstr.lastIndexOf('.') + 1).toLowerCase();
-      var isImage = false;
-
-      var tempurl = result['@url'];
-      var t = tempurl.substring(tempurl.lastIndexOf('.') + 1).toLowerCase();
-      if(t == "jpg" || t == "jpeg" || t == "png" || t == "gif" || t == "bmp") {
-        isImage = true;
-      }
-      computedResult.contentUrl = result['@url'];
-      computedResult.isImage = isImage;
-      return computedResult;
     }
 
     // Moved this functions from old code to here to perform search

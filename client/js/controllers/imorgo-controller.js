@@ -1,11 +1,8 @@
-/**
- * Created by cselvaraj on 4/29/14.
- */
 'use strict';
 // CONTROLLER
-angular.module('searchblox.controller', [])
-  .controller('searchbloxController', ['$rootScope', '$scope', '$http', '$location', 'searchbloxService', 'searchbloxFactory', 'facetFactory', '$q', '$timeout', '$sce',
-    function($rootScope, $scope, $http, $location, searchbloxService, searchbloxFactory, facetFactory, $q, $timeout, $sce) {// 'autoCompleteFactory',
+angular.module('imorgo.controller', [])
+  .controller('imorgoController', ['$rootScope', '$scope', '$http', '$location', 'imorgoService', 'imorgoFactory', 'facetFactory', '$q', '$timeout', '$sce',
+    function($rootScope, $scope, $http, $location, imorgoService, imorgoFactory, facetFactory, $q, $timeout, $sce) {// 'autoCompleteFactory',
 
       var searchUrl = '/api/search';
       var autoSuggestUrl = searchUrl;
@@ -31,12 +28,12 @@ angular.module('searchblox.controller', [])
       // load autosuggest items
       $scope.loadItems = function(term) {
         var autoSuggestData = $q.defer();
-        searchbloxFactory.getResponseData(autoSuggestUrl + '?limit=' + $scope.noOfSuggests + '&q=' + term).success(function(suggestionResults) {
-          var suggtns = searchbloxService.parseAutoSuggestion(suggestionResults);
+        imorgoFactory.getResponseData(autoSuggestUrl + '?limit=' + $scope.noOfSuggests + '&q=' + term).success(function(suggestionResults) {
+          var suggtns = imorgoService.parseAutoSuggestion(suggestionResults);
           $scope.timer = $timeout(function() {
             $rootScope.$apply(autoSuggestData.resolve(suggtns));
           }, 10);
-        }).error(function(err){
+        }).error(function(err) {
           console.log(err);
         });
         return autoSuggestData.promise;
@@ -52,6 +49,8 @@ angular.module('searchblox.controller', [])
             if(typeof($scope.showAutoSuggest) == "undefined" || $scope.showAutoSuggest == null) {
               $scope.showAutoSuggest = data.showAutoSuggest;
             }
+
+            $scope.facetFields = ['metal_level', 'plan_type', 'state'];
           }
         });
       };
@@ -66,13 +65,13 @@ angular.module('searchblox.controller', [])
       // Search function
       $scope.doSearch = function() {
 
-        var urlParams = searchbloxService.getUrlParams(searchUrl, $scope.query);
-        searchbloxFactory.getResponseData(urlParams).success(function(searchResults) {
-          $scope.parsedSearchResults = searchbloxService.parseResults(searchResults);
-          $scope.parsedLinks = searchbloxService.parseLinks(searchResults);
+        var urlParams = imorgoService.getUrlParams(searchUrl, $scope.query, $scope.facetFields);
+        imorgoFactory.getResponseData(urlParams).success(function(searchResults) {
+          $scope.parsedSearchResults = imorgoService.parseResults(searchResults);
+          $scope.parsedLinks = imorgoService.parseLinks(searchResults);
           $scope.startedSearch = true;
           $scope.inputClass.name = "ngCustomInput col-sm-6 col-md-6 col-md-offset-2";
-        }).error(function(err){
+        }).error(function(err) {
           console.log(err);
         });
       };

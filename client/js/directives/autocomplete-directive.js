@@ -12,7 +12,7 @@
  * @param {expression} source Callback that will be called for every keystroke and will be provided with the current
  *                            input's value. Must return a promise.
  */
-angular.module('searchblox.autocomplete', [])
+angular.module('imorgo.autocomplete', [])
   .directive('autocomplete', ["$document", function($document) {
     function SuggestionList(loadFn) {
       var self = {};

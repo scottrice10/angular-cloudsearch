@@ -15,26 +15,26 @@ var KEYS = {
   comma: 188
 };
 
-angular.module('searchbloxModule', [
+angular.module('imorgoModule', [
   'facetModule',
-  'searchblox.controller',
-  'searchblox.custominput',
-  'searchblox.autocomplete',
-  'searchblox.factory',
-  'searchblox.trust',
-  'searchblox.service',
+  'imorgo.controller',
+  'imorgo.custominput',
+  'imorgo.autocomplete',
+  'imorgo.factory',
+  'imorgo.trust',
+  'imorgo.service',
   'ui.bootstrap',
   'ngRoute',
   'ngSanitize',
-  'searchblox.contentItem',
+  'imorgo.contentItem',
   'rw.ui-slider'
 ])
   .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
-        title: 'SearchBlox Faceted Search',
+        title: 'imorgo Faceted Search',
         templateUrl: 'views/main.html',
-        controller: 'searchbloxController'
+        controller: 'imorgoController'
       })
       .otherwise({
         redirecTo: '/'

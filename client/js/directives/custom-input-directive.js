@@ -12,7 +12,7 @@
  * @param {boolean=true} addOnEnter Flag performs a search on pressing the ENTER key.
  *
  */
-angular.module('searchblox.custominput', [])
+angular.module('imorgo.custominput', [])
   .directive('custominput', ["$interpolate", function($interpolate) {
     function loadOptions(scope, attrs) {
       function getStr(name, defaultValue) {

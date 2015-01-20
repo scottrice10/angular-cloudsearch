@@ -17,27 +17,29 @@ router.get('/', function(req, res) {
 router.get('/api/search', function(req, res) {
   var params = {
     query: req.query.q ? req.query.q + "*" : "",
-    //facet: function () {
-    //  var facets = req.query.facets || [];
-    //  var facetsString = "{";
-    //  for(var i = 0; i < facets.length; i++) {
-    //    facetsString += '"' + facets[i] + '":{"sort":"bucket", "size":10}';
-    //
-    //    if(i !== facets.length - 1) {
-    //      facetsString += ",";
-    //    }
-    //  }
-    //  facetsString += "}";
-    //
-    //  return facetsString;
-    //}(),
     partial: true,
     queryOptions: '{"defaultOperator": "or"}',
     queryParser: 'simple',
-    size: req.query.limit || 10,
-    //sort: 'score desc',
-    //start: req.query.page ? (req.query.page * this.size) : 0
+    size: req.query.limit || 10
   };
+
+  // only add facets to params if params sent in request
+  if(typeof req.query.facets !== "undefined"){
+    params.facet = function () {
+      var facets = req.query.facets.split(",") || [];
+      var facetsString = "{";
+      for(var i = 0; i < facets.length; i++) {
+        facetsString += '"' + facets[i] + '":{"sort":"count", "size":10}';
+
+        if(i !== facets.length - 1) {
+          facetsString += ",";
+        }
+      }
+      facetsString += "}";
+
+      return facetsString;
+    }()
+  }
 
   cloudsearchdomain.search(params, function(err, data) {
     if(err) {
