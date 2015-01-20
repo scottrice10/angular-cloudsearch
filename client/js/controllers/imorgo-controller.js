@@ -15,6 +15,7 @@ angular.module('imorgo.controller', [])
       $scope.page = 1;
       $scope.prevPage = 1;
       $scope.noOfSuggests = 5;
+      $scope.checked = [];
 
       $scope.paginationHtml = "";
       $scope.tagHtml = "";
@@ -105,86 +106,27 @@ angular.module('imorgo.controller', [])
       };
 
       // Function for search by filter.
-      $scope.doSearchByFilter = function(filter, facetName) {
+      $scope.doSearchByFilter = function(filter, facetName, checkboxIndex) {
         $scope.page = 1;
+
+        $scope.checked[checkboxIndex] = !$scope.checked[checkboxIndex];
 
         var filters = "",
           filterName = filter['@name'],
-          filterRangeFrom = filter['@from'],
-          filterRangeTo = filter['@to'],
-          filterRangeCalendar = filter['@calendar'],
-          filterRangeValue = filter['@value'],
-          slider = filter['slider'] = (rSlider || false),
           searchReplacment = false,
           filter_index = -1,
           hasFilter = false;
-
-        for(var i = 0, l = $scope.selectedItems.length; i < l; i++) {
-          var obj = $scope.selectedItems[i];
-
-          if(obj['filterRangeFrom'] !== undefined && obj['filterRangeTo'] !== undefined) {
-            if(obj['facetName'] === facetName) {
-              if((facetName === 'size' && obj['slider'] === slider) || facetName === 'lastmodified') {
-                searchReplacment = true;
-                filter_index = i;
-              }
-            }
-
-            if((obj['filterName'] === filterName) && (obj['facetName'] === facetName)
-              && obj['filterRangeFrom'] === filterRangeFrom
-              && obj['filterRangeTo'] === filterRangeTo
-            ) {
-              hasFilter = true;
-            } else {
-              filters = filters + '&f.' + obj['facetName'] + '.filter=[' + obj['filterRangeFrom'] + 'TO' + obj['filterRangeTo'] + ']';
-            }
-          } else if(obj['filterRangeCalendar'] !== undefined && obj['filterRangeValue'] !== undefined) {
-            if((obj['filterName'] === filterName) && (obj['facetName'] === facetName)
-              && obj['filterRangeCalendar'] === filterRangeCalendar
-              && obj['filterRangeValue'] === filterRangeValue
-            ) {
-              hasFilter = true;
-            } else {
-              filters = filters + '&f.' + obj['facetName'] + '.filter=[' + moment().subtract(obj['filterRangeCalendar'], obj['filterRangeValue']).format("YYYY-MM-DDTHH:mm:ss") + 'TO*]';
-            }
-          } else {
-            if((obj['filterName'] === filterName) && (obj['facetName'] === facetName)) {
-              hasFilter = true;
-            } else {
-              filters = filters + "&f." + obj['facetName'] + ".filter=" + obj['filterName'];
-            }
-          }
-        }
 
         var newFilter = {};
         newFilter["id"] = $scope.selectedItems.size;
         newFilter['filterName'] = filterName;
         newFilter['facetName'] = facetName;
-        newFilter['filterRangeFrom'] = filterRangeFrom;
-        newFilter['filterRangeTo'] = filterRangeTo;
-        newFilter['filterRangeCalendar'] = filterRangeCalendar;
-        newFilter['filterRangeValue'] = filterRangeValue;
-        newFilter['slider'] = slider;
         newFilter['pageNo'] = $scope.prevPage;
         $scope.prevPage = $scope.page;
 
         $scope.prepareFilters = function() {
           if(!hasFilter || searchReplacment === true) {
-            if(filterRangeFrom !== undefined && filterRangeTo !== undefined) {
-              var rangeFilter = '';
-
-              if(searchReplacment) {
-                rangeFilter = '&f.' + facetName + '.filter=[' + filterRangeFrom + 'TO' + filterRangeTo + ']';
-              } else {
-                rangeFilter = filters + '&f.' + facetName + '.filter=[' + filterRangeFrom + 'TO' + filterRangeTo + ']';
-              }
-
-              $scope.filterFields = rangeFilter;
-            } else if(filterRangeCalendar !== undefined && filterRangeValue !== undefined) {
-              $scope.filterFields = filters + '&f.' + facetName + '.filter=[' + moment().subtract(filterRangeCalendar, filterRangeValue).format("YYYY-MM-DDTHH:mm:ss") + 'TO*]';
-            } else {
-              $scope.filterFields = filters + "&f." + facetName + ".filter=" + filterName;
-            }
+            $scope.filterFields = filters + "&f." + facetName + ".filter=" + filterName;
 
             $scope.showInput = true;
             if(searchReplacment === true && filter_index > -1) {
