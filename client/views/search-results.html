@@ -35,8 +35,8 @@
                <h5 style="font-weight: bold" ng-bind="object.label"></h5>
                <ul>
                   <li ng-repeat="item in object.buckets">
-                     <a href data-ng-click="doSearchByFilter(facet, item.value, $index)" ng-show="item.value">
-                        <input type="checkbox" ng-model="checked[$index]">
+                     <a href data-ng-click="doSearchByFilter(facet, item.value)" ng-show="item.value">
+                        <input type="checkbox" ng-model="checked[item.value]">
                         <span ng-bind-html="item.value | trust" class="facetText"></span>
                         ({{item.count}})
                      </a>

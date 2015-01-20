@@ -16,6 +16,7 @@ angular.module('imorgo.controller', [])
       $scope.prevPage = 1;
       $scope.noOfSuggests = 5;
       $scope.checked = [];
+      $scope.filterFields = [];
 
       $scope.paginationHtml = "";
       $scope.tagHtml = "";
@@ -70,9 +71,9 @@ angular.module('imorgo.controller', [])
       };
 
       // Search function
-      $scope.doSearch = function() {
+      $scope.doSearch = function(filterFields) {
 
-        var urlParams = imorgoService.getUrlParams(searchUrl, $scope.query, $scope.facetFields);
+        var urlParams = imorgoService.getUrlParams(searchUrl, $scope.query, $scope.facetFields, filterFields);
         imorgoFactory.getResponseData(urlParams).success(function(searchResults) {
           $scope.parsedSearchResults = imorgoService.parseResults(searchResults, $scope.facetMap);
           $scope.parsedLinks = imorgoService.parseLinks(searchResults);
@@ -106,39 +107,12 @@ angular.module('imorgo.controller', [])
       };
 
       // Function for search by filter.
-      $scope.doSearchByFilter = function(filter, facetName, checkboxIndex) {
+      $scope.doSearchByFilter = function(term, value) {
         $scope.page = 1;
+        $scope.checked[value] = !$scope.checked[value];
+        $scope.filterFields.push({term : term, value: value});
 
-        $scope.checked[checkboxIndex] = !$scope.checked[checkboxIndex];
-
-        var filters = "",
-          filterName = filter['@name'],
-          searchReplacment = false,
-          filter_index = -1,
-          hasFilter = false;
-
-        var newFilter = {};
-        newFilter["id"] = $scope.selectedItems.size;
-        newFilter['filterName'] = filterName;
-        newFilter['facetName'] = facetName;
-        newFilter['pageNo'] = $scope.prevPage;
-        $scope.prevPage = $scope.page;
-
-        $scope.prepareFilters = function() {
-          if(!hasFilter || searchReplacment === true) {
-            $scope.filterFields = filters + "&f." + facetName + ".filter=" + filterName;
-
-            $scope.showInput = true;
-            if(searchReplacment === true && filter_index > -1) {
-              $scope.selectedItems[filter_index] = newFilter;
-            } else {
-              $scope.selectedItems.push(newFilter);
-            }
-          }
-        };
-
-        $scope.prepareFilters();
-        $scope.doSearch();
+        $scope.doSearch($scope.filterFields);
       };
 
       // Function for fetch page results.

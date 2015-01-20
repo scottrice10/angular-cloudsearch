@@ -26,20 +26,19 @@ router.get('/api/search', function(req, res) {
     };
 
     params.query= function(){
-      var queryString = "( ";
-      if(req.query.q){
-        queryString += "prefix '" + req.query.q + "' ";
+      var queryString = "(or ";
+      if(req.query.q || req.query.filters){
+        var query = req.query.q ? "prefix '" + req.query.q + "'" : "";
+        queryString += query;
       } else {
         queryString += "matchall";
       }
 
-      if(req.query.fields){
-        var fieldsArray = req.query.fields.split(",");
-        queryString += "(or ";
-        fieldsArray.forEach(function(field){
-          queryString += "(term field=" + field.term + "'" + field.value + "')"
+      if(req.query.filters){
+        var filtersArray = JSON.parse(req.query.filters);
+        filtersArray.forEach(function(filter){
+          queryString += "(term field=" + filter.term + " '" + filter.value + "')"
         });
-        queryString += ")"
       }
 
       queryString += ")";
