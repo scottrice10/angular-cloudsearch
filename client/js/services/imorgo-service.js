@@ -69,21 +69,6 @@ angular.module('imorgo.service', [])
     };
 
     /**
-     * Function for reading collection values from facet.json
-     **/
-    this.getCollectionValues = function(collection) {
-      //var values = new Array();
-      var collectionString = "";
-      for(var i in collection) {
-        console.log(i);
-        //  values.push(collection[i]);
-        collectionString = collectionString + '&col=' + collection[i];
-      }
-      //  this.collectionArray = values;
-      return collectionString;
-    };
-
-    /**
      * Function to check if the sort value is valid
      */
     this.sortBtnExists = function(sortVal) {
@@ -159,15 +144,24 @@ angular.module('imorgo.service', [])
     // Moved this functions from old code to here to perform search
     // read the result object and return useful vals depending on if ES or SOLR
     // returns an object that contains things like ["data"] and ["facets"]
-    this.parseResults = function(dataobj) {
+    this.parseResults = function(dataobj, facetMap) {
       var resultobj = new Object();
       resultobj["records"] = new Array();
       resultobj["start"] = "";
-      resultobj["found"] = "0";
+
+      resultobj["found"] = "" + dataobj.hits.found || "0";
       if(typeof(dataobj.hits) !== "undefined" && typeof(dataobj.hits.hit) !== "undefined") {
         dataobj.hits.hit.forEach(function(item) {
           resultobj["records"].push(item);
-          resultobj["found"] = item.found;
+        });
+      }
+
+      resultobj["facets"] = dataobj.facets;
+      for(var key in resultobj.facets){
+        facetMap.facets.forEach(function(jsonFacet){
+          if(key === jsonFacet.field){
+            resultobj.facets[key].label = jsonFacet.display;
+          }
         });
       }
 

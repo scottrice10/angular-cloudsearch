@@ -18,6 +18,94 @@
   ],
   "sortDir": "desc",
   "pageSize": "10",
-  "showAutoSuggest": "true"
+  "showAutoSuggest": "true",
+  "metal_level":{
+    "buckets": [
+      {
+        "value": "Silver",
+        "count": 13118
+      },
+      {
+        "value": "Bronze",
+        "count": 10691
+      },
+      {
+        "value": "Gold",
+        "count": 10181
+      },
+      {
+        "value": "Catastrophic",
+        "count": 2422
+      },
+      {
+        "value": "Platinum",
+        "count": 1722
+      }
+    ]
+  },
+  "plan_type":{
+    "buckets": [
+      {
+        "value": "PPO",
+        "count": 24903
+      },
+      {
+        "value": "HMO",
+        "count": 8235
+      },
+      {
+        "value": "EPO",
+        "count": 3672
+      },
+      {
+        "value": "POS",
+        "count": 1324
+      }
+    ]
+  },
+  "state":{
+    "buckets": [
+      {
+        "value": "TX",
+        "count": 4580
+      },
+      {
+        "value": "TN",
+        "count": 3854
+      },
+      {
+        "value": "FL",
+        "count": 3697
+      },
+      {
+        "value": "KS",
+        "count": 3112
+      },
+      {
+        "value": "GA",
+        "count": 2390
+      },
+      {
+        "value": "NC",
+        "count": 1736
+      },
+      {
+        "value": "LA",
+        "count": 1505
+      },
+      {
+        "value": "IN",
+        "count": 1483
+      },
+      {
+        "value": "MO",
+        "count": 1470
+      },
+      {
+        "value": "OK",
+        "count": 1385
+      }
+    ]
+  }
 }
 

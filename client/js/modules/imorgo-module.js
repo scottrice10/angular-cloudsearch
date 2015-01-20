@@ -26,8 +26,7 @@ angular.module('imorgoModule', [
   'ui.bootstrap',
   'ngRoute',
   'ngSanitize',
-  'imorgo.contentItem',
-  'rw.ui-slider'
+  'imorgo.contentItem'
 ])
   .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider

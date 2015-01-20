@@ -45,12 +45,15 @@ angular.module('imorgo.controller', [])
         facetFactory.get().$promise.then(function(data) {
           if(data !== null) {
             $scope.startedSearch = true;
+            $scope.facetMap = data;
+            $scope.facetFields = [];
+            $scope.facetMap.facets.forEach(function(facet){
+              $scope.facetFields.push(facet.field);
+            });
 
             if(typeof($scope.showAutoSuggest) == "undefined" || $scope.showAutoSuggest == null) {
               $scope.showAutoSuggest = data.showAutoSuggest;
             }
-
-            $scope.facetFields = ['metal_level', 'plan_type', 'state'];
           }
         });
       };
@@ -67,7 +70,7 @@ angular.module('imorgo.controller', [])
 
         var urlParams = imorgoService.getUrlParams(searchUrl, $scope.query, $scope.facetFields);
         imorgoFactory.getResponseData(urlParams).success(function(searchResults) {
-          $scope.parsedSearchResults = imorgoService.parseResults(searchResults);
+          $scope.parsedSearchResults = imorgoService.parseResults(searchResults, $scope.facetMap);
           $scope.parsedLinks = imorgoService.parseLinks(searchResults);
           $scope.startedSearch = true;
           $scope.inputClass.name = "ngCustomInput col-sm-6 col-md-6 col-md-offset-2";
@@ -223,22 +226,8 @@ angular.module('imorgo.controller', [])
         $scope.doSearch();
       };
 
-      // check if there is atleast one filter in the facet
+      // check if there is at least one filter in the facet
       $scope.hasFacets = function() {
-
-        if($scope.parsedSearchResults !== undefined && $scope.parsedSearchResults !== null
-          && $scope.parsedSearchResults.facets !== null) {
-
-          for(var i in $scope.parsedSearchResults.facets) {
-            //for (var i = 0, l = $scope.parsedSearchResults.facets.length; i < l; i++) {
-            var facet = $scope.parsedSearchResults.facets[i];
-            if(facet[facet['name']] !== undefined && facet[facet['name']] !== null
-              && facet[facet['name']][1] !== undefined && facet[facet['name']][1] !== null
-              && facet[facet['name']][1][0] !== undefined && facet[facet['name']][1][0] !== null) {
-              return true;
-            }
-          }
-        }
-        return false;
+        return $scope.parsedSearchResults !== undefined && $scope.parsedSearchResults !== null && $scope.parsedSearchResults.facets !== null;
       };
     }]);
