@@ -1,2 +1,4 @@
 #!/bin/sh
-gulp
+
+#run server
+forever start ../server/app.js -v

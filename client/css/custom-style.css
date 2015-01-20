@@ -1,6 +1,6 @@
 /* Styles go here */
 body {
-   margin-bottom:50px;
+   margin-bottom: 50px;
 }
 
 .border {
@@ -60,7 +60,14 @@ body {
    border-top: 1px solid #dddddd;
    margin-bottom: 12px;
    margin-top: 12px;
+}
 
+ul, menu, dir {
+   -webkit-padding-start: 5px;
+}
+
+li {
+   list-style: none;
 }
 
 /*.left-nav li a {

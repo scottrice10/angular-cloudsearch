@@ -10,12 +10,12 @@
             </label>
             <label ng-switch on="dataMap['sortDir']" class="btn btn-info btn-sm">
                <div ng-switch-when="asc">
-                  <div id="direction" dir="asc" data-ng-click="doDirector('desc')">
+                  <div id="directionUp" dir="asc" data-ng-click="doDirector('desc')">
                      <span class="glyphicon glyphicon-arrow-up"></span>
                   </div>
                </div>
                <div ng-switch-default>
-                  <div id="direction" dir="desc" data-ng-click="doDirector('asc')">
+                  <div id="directionDown" dir="desc" data-ng-click="doDirector('asc')">
                      <span class="glyphicon glyphicon-arrow-down"></span>
                   </div>
                </div>
@@ -43,6 +43,7 @@
                <h5 style="font-weight: bold" ng-bind="object.label"></h5>
                <ul>
                   <li ng-repeat="item in object.buckets">
+                     <input type="checkbox">
                      <a href data-ng-click="doSearchByFilter(filter, item.value)" ng-show="item.value">
                         <span ng-bind-html="item.value | trust" class="facetText"></span>
                         ({{item.count}})

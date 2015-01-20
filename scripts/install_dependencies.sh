@@ -4,6 +4,6 @@ sudo yum install git
 sudo yum install nodejs npm --enablerepo=epel
 
 sudo npm install
+sudo npm install -g bower forever
 
-sudo npm install -g bower
 bower install
