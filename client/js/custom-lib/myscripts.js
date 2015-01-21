@@ -8,24 +8,6 @@ function shuffle(items) {
   }
   return cached;
 }
-function shuffleNodes(list) {
-  var nodes = list.children, i = 0;
-  nodes = toArray(nodes);
-  nodes = shuffle(nodes);
-  while(i < nodes.length) {
-    list.appendChild(nodes[i]);
-    ++i;
-  }
-}
-
-function toArray(obj) {
-  var array = [];
-  // iterate backwards ensuring that length is an UInt32
-  for(var i = obj.length >>> 0; i--;) {
-    array[i] = obj[i];
-  }
-  return array;
-}
 
 if(typeof String.prototype.startsWith != 'function') {
   String.prototype.startsWith = function(str) {
@@ -59,34 +41,3 @@ Object.resolve = function(path, obj) {
     return prev[curr];
   });
 };
-/**
- * Source: http://stackoverflow.com/a/18650828/2706988
- * @param {Number} bytes
- * @returns {Number|String} return string if @size is true, otherwise number
- */
-function bytesToSize(bytes, size) {
-  var result = 0,
-    size = size || false;
-
-  if(bytes == 0) return 0;
-
-  var k = 1024,
-    sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-    i = Math.floor(Math.log(bytes) / Math.log(k));
-
-  result = +(bytes / Math.pow(k, i)).toPrecision(3);
-
-  if(size === true) {
-    result += ' ' + sizes[i];
-  }
-
-  return result;
-}
-
-function writeJsInclude(src) {
-  document.write('<script type="text/javascript" src="' + src + '"></scr' + 'ipt>');
-}
-
-function writeCssInclude(href) {
-  document.write('<link rel="stylesheet" href="' + href + '">');
-}

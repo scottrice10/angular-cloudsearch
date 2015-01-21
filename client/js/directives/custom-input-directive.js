@@ -73,8 +73,6 @@ angular.module('imorgo.custominput', [])
           key = e.keyCode;
           if(key === KEYS.enter && scope.options.addOnEnter) {
             scope.onsearch();
-
-
           }
         });
         element.find('div').bind('click', function() {

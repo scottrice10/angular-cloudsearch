@@ -14,10 +14,10 @@
    <div id="sort_btn_aligner">
       <div class="btn-group btn-group-{{type}} col-sm-6 col-md-6 col-md-offset-2" data-toggle="buttons">
          <label class="btn btn-warning disabled btn-sm">Sort By :</label>
-         <label ng-repeat="sortBtn in sortBtns" class="btn btn-primary btn-sm"
-                data-ng-click="doSort(sortBtn['sortVal'])">
+         <label ng-repeat="sortBtn in sortBtns" class="btn btn-primary btn-sm" data-ng-click="doSort(sortBtn['sortVal'])">
             {{sortBtn['display']}}
-            <input type="radio"></label>
+            <input type="radio">
+         </label>
          </label>
          <label ng-switch on="dataMap['sortDir']" class="sortBtn btn btn-info btn-sm">
             <div ng-switch-when="asc">
