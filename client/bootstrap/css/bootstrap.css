@@ -1105,7 +1105,7 @@ pre code {
     width: 58.333333333333336%;
   }
   .col-md-6 {
-    width: 50%;
+    width: 96%;
   }
   .col-md-5 {
     width: 41.66666666666667%;
@@ -1656,7 +1656,7 @@ input[type="search"] {
 }
 input[type="radio"],
 input[type="checkbox"] {
-  margin: 4px 0 0;
+  margin: 4px 0px 0;
   margin-top: 1px \9;
   /* IE8-9 */
   line-height: normal;
@@ -3123,12 +3123,12 @@ input[type="button"].btn-block {
 .btn-group-vertical {
   /* position: relative; */
   /* display: inline-block; */
-  vertical-align: middle;
+  /* vertical-align: middle; */
 }
 .btn-group > .btn,
 .btn-group-vertical > .btn {
-  position: relative;
-  float: left;
+  /* position: relative; */
+  /* float: left; */
 }
 .btn-group > .btn:hover,
 .btn-group-vertical > .btn:hover,

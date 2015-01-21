@@ -70,10 +70,6 @@ li {
    list-style: none;
 }
 
-/*.left-nav li a {
-    word-wrap: break-word;
-    white-space: normal;
-}*/
 .app-font {
    margin: 0;
    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -89,6 +85,10 @@ li {
    left: 0px;
    right: 0px;
    margin-top: 30px;
+}
+
+.field-value {
+   font-weight: 500;
 }
 
 /*screen-xs*/

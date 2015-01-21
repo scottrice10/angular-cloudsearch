@@ -7,7 +7,7 @@ angular.module('imorgo.service', [])
   .service('imorgoService', ['$rootScope', function($rootScope) {
 
     // function for generating url
-    this.getUrlParams = function(url, query, facets, filterFields) {
+    this.getUrlParams = function(url, query, facets, filterFields, sort) {
       var urlParam = url + "?";
 
       if(typeof(query) !== "undefined" && query !== null) {
@@ -20,6 +20,10 @@ angular.module('imorgo.service', [])
 
       if(filterFields && filterFields.length > 0) {
         urlParam = urlParam + "&filters=" + encodeURIComponent(JSON.stringify(filterFields));
+      }
+
+      if(typeof(sort) !== "undefined" && sort !== null) {
+        urlParam = urlParam + "&sort=" + encodeURIComponent(sort);
       }
 
       return urlParam;

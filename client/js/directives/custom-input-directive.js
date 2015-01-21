@@ -34,7 +34,9 @@ angular.module('imorgo.custominput', [])
       scope: {
         searchParam: '=ngModel',
         onsearch: '=',
-        inputstyle: "=inputstyle"
+        inputstyle: "=inputstyle",
+        dosort: "=",
+        isascending: "="
       },
       replace: false,
       transclude: true,

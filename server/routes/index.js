@@ -52,6 +52,10 @@ router.get('/api/search', function(req, res) {
     };
   }
 
+  if(typeof req.query.sort !== "undefined"){
+    params.sort = req.query.sort;
+  }
+
   // only add facets to params if params sent in request
   if(typeof req.query.facets !== "undefined"){
     params.facet = function () {

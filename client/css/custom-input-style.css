@@ -1,7 +1,12 @@
 .sortBtn {
-   position: absolute!important;
+   margin-left: -5px;
 }
 
 .ngCustomInput {
    width: 57%;
+}
+
+.dropdown-menu {
+   margin-top: -5px;
+   margin-left: 14px;
 }

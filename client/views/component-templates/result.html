@@ -4,12 +4,15 @@
 
 <div class="row-fluid">
     <div>
+        <div ng-show="content.fields.premium_adult_individual_age_27[0]">
+            Monthly Premium: <span class="field-value">{{content.fields.premium_adult_individual_age_27 | currency:"$" }}</span>
+        </div>
         <div ng-show="content.fields.issuer_name[0]">
-            Provider: {{content.fields.issuer_name[0]}}
+            Provider: <span class="field-value">{{content.fields.issuer_name[0]}}</span>
         </div>
 
-        <div ng-show="content.fields.premium_adult_individual_age_27[0]">
-            Monthly premium: {{content.fields.premium_adult_individual_age_27 | currency:"$" }}
+        <div ng-show="content.fields.summary_of_benefits_url[0]">
+            <a href="{{content.fields.summary_of_benefits_url[0]}}">Summary of Benefits</a>
         </div>
     </div>
 </div>
