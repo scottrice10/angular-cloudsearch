@@ -67,13 +67,13 @@ angular.module('imorgo.controller', [])
         $scope.from = 0;
         $scope.page = 1;
         $scope.prevPage = 1;
-        $scope.doSearch($scope.filterFields, $scope.sortField);
+        $scope.doSearch();
       };
 
       // Search function
-      $scope.doSearch = function(filterFields, sort) {
+      $scope.doSearch = function() {
 
-        var urlParams = imorgoService.getUrlParams(searchUrl, $scope.query, $scope.facetFields, filterFields, sort);
+        var urlParams = imorgoService.getUrlParams(searchUrl, $scope.query, $scope.facetFields, $scope.filterFields, $scope.sortField);
         imorgoFactory.getResponseData(urlParams).success(function(searchResults) {
           $scope.parsedSearchResults = imorgoService.parseResults(searchResults, $scope.facetMap);
           $scope.parsedLinks = imorgoService.parseLinks(searchResults);
@@ -90,7 +90,7 @@ angular.module('imorgo.controller', [])
 
         var direction = isAscending ? " asc" : " desc";
         $scope.sortField = field + direction;
-        $scope.doSearch($scope.filterFields, $scope.sortField);
+        $scope.doSearch();
       };
 
       // adjust how many results are shown
@@ -118,7 +118,7 @@ angular.module('imorgo.controller', [])
           })
         }
 
-        $scope.doSearch($scope.filterFields, $scope.sortField);
+        $scope.doSearch();
       };
 
       // Function for fetch page results.

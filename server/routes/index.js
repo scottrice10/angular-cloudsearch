@@ -36,9 +36,11 @@ router.get('/api/search', function(req, res) {
 
       if(req.query.filters){
         var filtersArray = JSON.parse(req.query.filters);
+        queryString += "(and ";
         filtersArray.forEach(function(filter){
           queryString += "(term field=" + filter.term + " '" + filter.value + "')"
         });
+        queryString += ")";
       }
 
       queryString += ")";
