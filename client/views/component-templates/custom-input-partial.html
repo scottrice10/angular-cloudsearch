@@ -1,0 +1,36 @@
+<div class="{{inputstyle.name}}">
+   <div class="input-group input-group-sm">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+      <input class="form-control" type="text"
+             placeholder="search term"
+             ng-model="searchParam"
+             ng-change="newTagChange()">
+      </span>
+   </div>
+   <div ng-transclude></div>
+</div>
+
+<div class="row" style="display: inline-block;margin-left: -30px;">
+   <div id="sort_btn_aligner">
+      <div class="btn-group btn-group-{{type}} col-sm-6 col-md-6 col-md-offset-2" data-toggle="buttons">
+         <label class="btn btn-warning disabled btn-sm">Sort By :</label>
+         <label ng-repeat="sortBtn in sortBtns" class="btn btn-primary btn-sm"
+                data-ng-click="doSort(sortBtn['sortVal'])">
+            {{sortBtn['display']}}
+            <input type="radio"></label>
+         </label>
+         <label ng-switch on="dataMap['sortDir']" class="sortBtn btn btn-info btn-sm">
+            <div ng-switch-when="asc">
+               <div id="directionUp" dir="asc" data-ng-click="doDirector('desc')">
+                  <span class="glyphicon glyphicon-arrow-up"></span>
+               </div>
+            </div>
+            <div ng-switch-default>
+               <div id="directionDown" dir="desc" data-ng-click="doDirector('asc')">
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+               </div>
+            </div>
+         </label>
+      </div>
+   </div>
+</div>

@@ -58,7 +58,7 @@ router.get('/api/search', function(req, res) {
       var facets = req.query.facets.split(",") || [];
       var facetsString = "{";
       for(var i = 0; i < facets.length; i++) {
-        facetsString += '"' + facets[i] + '":{"sort":"count", "size":10}';
+        facetsString += '"' + facets[i] + '":{"sort":"bucket", "size":25}';
 
         if(i !== facets.length - 1) {
           facetsString += ",";

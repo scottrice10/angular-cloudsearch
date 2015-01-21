@@ -9,7 +9,7 @@ angular.module('imorgo.contentItem', []).
       scope: {
         content: '='
       },
-      templateUrl: 'views/component-templates/href.html',
+      templateUrl: 'views/component-templates/result.html',
       controller: function($scope) {
 
       }

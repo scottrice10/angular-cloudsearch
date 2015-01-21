@@ -5,7 +5,11 @@
 <div class="row-fluid">
     <div>
         <div ng-show="content.fields.issuer_name[0]">
-            {{content.fields.issuer_name[0]}}
+            Provider: {{content.fields.issuer_name[0]}}
+        </div>
+
+        <div ng-show="content.fields.premium_adult_individual_age_27[0]">
+            Monthly premium: {{content.fields.premium_adult_individual_age_27 | currency:"$" }}
         </div>
     </div>
 </div>

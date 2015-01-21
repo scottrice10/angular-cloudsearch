@@ -1,33 +1,10 @@
 <div class="container-fluid app-font">
-   <div class="row">
-      <div id="sort_btn_aligner" ng-show="parsedSearchResults.found > 0" style="margin-top:40px;margin-bottom:50px;">
-         <div class="btn-group btn-group-{{type}} col-sm-6 col-md-6 col-md-offset-2" data-toggle="buttons">
-            <label class="btn btn-warning disabled btn-sm">Sort By :</label>
-            <label ng-repeat="sortBtn in sortBtns" class="btn btn-primary btn-sm"
-                   data-ng-click="doSort(sortBtn['sortVal'])">
-               {{sortBtn['display']}}
-               <input type="radio"></label>
-            </label>
-            <label ng-switch on="dataMap['sortDir']" class="btn btn-info btn-sm">
-               <div ng-switch-when="asc">
-                  <div id="directionUp" dir="asc" data-ng-click="doDirector('desc')">
-                     <span class="glyphicon glyphicon-arrow-up"></span>
-                  </div>
-               </div>
-               <div ng-switch-default>
-                  <div id="directionDown" dir="desc" data-ng-click="doDirector('asc')">
-                     <span class="glyphicon glyphicon-arrow-down"></span>
-                  </div>
-               </div>
-            </label>
-         </div>
-      </div>
-   </div>
+   <div class="row"></div>
 
    <div class="row" style="margin-top:20px;">
       <div class="col-sm-2 col-md-2 sidebar left-nav colorBg" ng-show="hasFacets()" style="padding-top: 20px;">
         	<span>
-             <div ng-bind="parsedSearchResults.found + ' results found'"></div>
+             <div ng-bind="(parsedSearchResults.found | number) + ' results found'"></div>
         	</span>
 
 			<span>
@@ -38,7 +15,7 @@
                      <a href data-ng-click="doSearchByFilter(facet, item.value)" ng-show="item.value">
                         <input type="checkbox" ng-model="checked[item.value]">
                         <span ng-bind-html="item.value | trust" class="facetText"></span>
-                        ({{item.count}})
+                        ({{item.count | number}})
                      </a>
                   </li>
                </ul>

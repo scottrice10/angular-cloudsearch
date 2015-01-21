@@ -67,7 +67,9 @@ angular.module('imorgo.autocomplete', [])
     return {
       restrict: 'AE',
       require: '?^custominput',
-      scope: {source: '&'},
+      scope: {
+        source: '&'
+      },
       template: '<div class="autocomplete" ng-show="suggestionList.visible">' +
       '  <ul class="suggestions">' +
       '    <li class="suggestion" ng-repeat="item in suggestionList.items track by item.id"' +

@@ -31,20 +31,14 @@ angular.module('imorgo.custominput', [])
 
     return {
       restrict: 'AE',
-      scope: {searchParam: '=ngModel', onsearch: '=', inputstyle: "=inputstyle"},
+      scope: {
+        searchParam: '=ngModel',
+        onsearch: '=',
+        inputstyle: "=inputstyle"
+      },
       replace: false,
       transclude: true,
-      template: '<div class="{{inputstyle.name}}">' +
-      ' <div class="input-group input-group-sm">' +
-      '    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>' +
-      '    <input class="form-control" type="text"' +
-      '           placeholder="search term"' +
-      '           ng-model="searchParam"' +
-      '           ng-change="newTagChange()">' +
-      '</span>' +
-      ' </div>' +
-      '<div ng-transclude></div>' +
-      '</div>',
+      templateUrl: 'views/component-templates/custom-input-partial.html',
       controller: ["$scope", "$attrs", "$element", function($scope, $attrs, $element) {
 
         loadOptions($scope, $attrs);
