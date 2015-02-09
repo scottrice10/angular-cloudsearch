@@ -7,7 +7,7 @@ try {
   console.log(e);
 }
 
-AWS.Config({
+AWS.config.update({
   accessKeyId: process.env.ACCESS_KEY_ID || config.accessKeyId,
   secretAccessKey:  process.env.SECRET_ACCESS_KEY || config.secretAccessKey,
   region: 'us-west-2'
