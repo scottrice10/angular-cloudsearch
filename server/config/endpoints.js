@@ -1,5 +1,17 @@
 var AWS = require('aws-sdk');
-AWS.config.loadFromPath(__dirname + "/config.json");
+var config;
+
+try {
+  config = require("./config.js");
+} catch(e) {
+  console.log(e);
+}
+
+AWS.Config({
+  accessKeyId: process.env.ACCESS_KEY_ID || config.accessKeyId,
+  secretAccessKey:  process.env.SECRET_ACCESS_KEY || config.secretAccessKey,
+  region: 'us-west-2'
+});
 
 //AWS cloudsearchdomain configuration
 exports.cloudsearchdomain = new AWS.CloudSearchDomain({
