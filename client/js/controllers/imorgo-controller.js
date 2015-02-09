@@ -73,7 +73,7 @@ angular.module('imorgo.controller', [])
       // Search function
       $scope.doSearch = function() {
 
-        var urlParams = imorgoService.getUrlParams(searchUrl, $scope.query, $scope.facetFields, $scope.filterFields, $scope.sortField);
+        var urlParams = imorgoService.getUrlParams(searchUrl, $scope.query, $scope.facetFields, $scope.filterFields, $scope.sortField, $scope.start);
         imorgoFactory.getResponseData(urlParams).success(function(searchResults) {
           $scope.parsedSearchResults = imorgoService.parseResults(searchResults, $scope.facetMap);
           $scope.parsedLinks = imorgoService.parseLinks(searchResults);
@@ -123,8 +123,7 @@ angular.module('imorgo.controller', [])
 
       // Function for fetch page results.
       $scope.fetchPage = function(pageNo) {
-        $scope.page = pageNo;
-        $scope.prevPage = pageNo;
+        $scope.start = pageNo * 10;
         $scope.doSearch();
       };
 

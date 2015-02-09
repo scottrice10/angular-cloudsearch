@@ -26,7 +26,8 @@ angular.module('imorgoModule', [
   'ui.bootstrap',
   'ngRoute',
   'ngSanitize',
-  'imorgo.contentItem'
+  'imorgo.contentItem',
+  'angularUtils.directives.dirPagination'
 ])
   .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider

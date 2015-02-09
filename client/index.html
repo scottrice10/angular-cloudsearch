@@ -1,54 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script>document.write('<base href="' + document.location + '">');</script>
-    <title></title>
-    <meta charset="utf-8"/>
-    <script src="lib/jquery-2.1.0.min.js"></script>
+  <script>document.write('<base href="' + document.location + '">');</script>
+  <title></title>
+  <meta charset="utf-8"/>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
 
-    <script type="text/javascript" src="lib/angular.min.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="lib/angular-route.min.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="lib/angular-resource.min.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="lib/angular-sanitize.min.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="bower_components/angular/angular.min.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="bower_components/angular-route/angular-route.min.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="bower_components/angular-resource/angular-resource.min.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="bower_components/angular-utils-pagination/dirPagination.js"></script>
 
-    <script type="text/javascript" src="lib/moment.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="lib/json2extension.js" charset="UTF-8"></script>
-    
-    <script src="lib/jquery-ui/jquery-ui.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="lib/jquery-ui/themes/smoothness/jquery-ui.min.css">
-    
-    <script src="lib/ui-bootstrap-tpls-0.10.0.js" charset="UTF-8"></script>
-    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="css/custom-style.css"/>
-    <script src="bootstrap/js/bootstrap.min.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="lib/moment.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="lib/json2extension.js" charset="UTF-8"></script>
 
-    <script src="js/controllers/imorgo-controller.js" charset="UTF-8"></script>
-    <script src="js/directives/autocomplete-directive.js" charset="UTF-8"></script>
-    <script src="js/directives/custom-input-directive.js" charset="UTF-8"></script>
-    <script src="js/directives/search-result-directive.js" charset="UTF-8"></script>
-    <script src="js/factories/imorgo-factory.js" charset="UTF-8"></script>
-    <script src="js/filters/imorgo-filter.js" charset="UTF-8"></script>
-    <script src="js/modules/facet-module.js" charset="UTF-8"></script>
-    <script src="js/modules/imorgo-module.js" charset="UTF-8"></script>
-    <script src="js/services/imorgo-service.js" charset="UTF-8"></script>
-    <script src="js/custom-lib/myscripts.js" charset="UTF-8"></script>
+  <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css">
 
-    <link rel="stylesheet" href="css/autosuggest-style.css"/>
-    <link rel="stylesheet" href="css/custom-input-style.css"/>
+  <script src="lib/ui-bootstrap-tpls-0.10.0.js" charset="UTF-8"></script>
+  <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/custom-style.css"/>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js" charset="UTF-8"></script>
+
+  <script src="js/controllers/imorgo-controller.js" charset="UTF-8"></script>
+  <script src="js/directives/autocomplete-directive.js" charset="UTF-8"></script>
+  <script src="js/directives/custom-input-directive.js" charset="UTF-8"></script>
+  <script src="js/directives/search-result-directive.js" charset="UTF-8"></script>
+  <script src="js/factories/imorgo-factory.js" charset="UTF-8"></script>
+  <script src="js/filters/imorgo-filter.js" charset="UTF-8"></script>
+  <script src="js/modules/facet-module.js" charset="UTF-8"></script>
+  <script src="js/modules/imorgo-module.js" charset="UTF-8"></script>
+  <script src="js/services/imorgo-service.js" charset="UTF-8"></script>
+  <script src="js/custom-lib/myscripts.js" charset="UTF-8"></script>
+
+  <link rel="stylesheet" href="css/autosuggest-style.css"/>
+  <link rel="stylesheet" href="css/custom-input-style.css"/>
 
 </head>
 <body>
 <div ng-app="imorgoModule" class="container">
-    <div style="margin-top:10px;margin-bottom:10px" align="center">
-        <a href="http://imorgo.com" style="text-decoration: none;"><h1>imorgo</h1></a>
-    </div>
-    
-    <div ng-view></div>
-    
-    <div id="footer" style="margin-top: 10px;" align="center">
-        <span class="app-font">Copyright {{ddate}} Imorgo, Inc.</span>
-        <span class="links">&nbsp;<a href="http://fuzzyquery.com" target="_blank">Contact Us</a></span>
-    </div>
+  <div style="margin-top:10px;margin-bottom:10px" align="center">
+    <a href="http://imorgo.com" style="text-decoration: none;"><h1>imorgo</h1></a>
+  </div>
+
+  <div ng-view></div>
+
+  <div id="footer" style="margin-top: 10px;" align="center">
+    <span class="app-font">Copyright {{ddate}} Imorgo, Inc.</span>
+    <span class="links">&nbsp;<a href="http://fuzzyquery.com" target="_blank">Contact Us</a></span>
+  </div>
 
 </div>
 

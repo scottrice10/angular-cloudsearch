@@ -17,27 +17,26 @@ router.get('/', function(req, res) {
 router.get('/api/search', function(req, res) {
   var params = {};
   params.size = req.query.limit || 10;
+  params.start = req.query.start || 0;
   params.partial = true;
 
-  if(typeof req.query.q === "undefined" || req.query.fields){
-    params = {
-      queryOptions: '{"defaultOperator": "or"}',
-      queryParser: 'structured'
-    };
+  if(typeof req.query.q === "undefined" || req.query.fields) {
+    params.queryOptions = '{"defaultOperator": "or"}';
+    params.queryParser = 'structured';
 
-    params.query= function(){
+    params.query = function() {
       var queryString = "(or ";
-      if(req.query.q || req.query.filters){
+      if(req.query.q || req.query.filters) {
         var query = req.query.q ? "prefix '" + req.query.q + "'" : "";
         queryString += query;
       } else {
         queryString += "matchall";
       }
 
-      if(req.query.filters){
+      if(req.query.filters) {
         var filtersArray = JSON.parse(req.query.filters);
         queryString += "(and ";
-        filtersArray.forEach(function(filter){
+        filtersArray.forEach(function(filter) {
           queryString += "(term field=" + filter.term + " '" + filter.value + "')"
         });
         queryString += ")";
@@ -47,20 +46,18 @@ router.get('/api/search', function(req, res) {
       return queryString;
     }();
   } else {
-    params = {
-      query: req.query.q + "*",
-      queryOptions: '{"defaultOperator": "or"}',
-      queryParser: 'simple'
-    };
+    params.query = req.query.q + "*";
+    params.queryOptions = '{"defaultOperator": "or"}';
+    params.queryParser = 'simple';
   }
 
-  if(typeof req.query.sort !== "undefined"){
+  if(typeof req.query.sort !== "undefined") {
     params.sort = req.query.sort;
   }
 
   // only add facets to params if params sent in request
-  if(typeof req.query.facets !== "undefined"){
-    params.facet = function () {
+  if(typeof req.query.facets !== "undefined") {
+    params.facet = function() {
       var facets = req.query.facets.split(",") || [];
       var facetsString = "{";
       for(var i = 0; i < facets.length; i++) {

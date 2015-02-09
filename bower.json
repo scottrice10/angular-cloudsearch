@@ -1,12 +1,16 @@
 {
-  "name": "TodoApp",
+  "name": "imorgo",
   "version": "0.1.0",
-  "description": "A MEAN stack Todo App",
+  "description": "A health insurance search app",
   "private": true,
   "dependencies": {
     "jquery": "~2.1.1",
+    "jquery-ui": "*",
     "bootstrap": "~3.2.0",
-    "angular": "~1.2.23",
-    "angular-route": "~1.2.23"
+    "angular": "*",
+    "angular-route": "*",
+    "angular-resource": "*",
+    "angular-sanitize": "*",
+    "angular-utils-pagination": "*"
   }
 }
