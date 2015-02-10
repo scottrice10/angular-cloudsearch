@@ -42,49 +42,12 @@ angular.module('imorgo.service', [])
       return suggestions;
     };
 
-    function getParam(paramName, urlString) {
-      paramName = paramName.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-      var regexS = "[\\?&]" + paramName + "=([^&#]*)";
-      var regex = new RegExp(regexS);
-      var results = regex.exec(urlString);
-      if(results == null) {
-        return "";
-      }
-      else {
-        return results[1];
-      }
-    }
-
-    this.parseLinks = function(dataobj, facetFieldsMap) {
-      var resultobj = new Object();
-      resultobj["pages"] = new Array();
-      resultobj["sort"] = new Array();
-      if(typeof(dataobj.links) !== "undefined" && typeof(dataobj.links.link) !== "undefined") {
-        for(var item in dataobj.links.link) {
-          if(dataobj.links.link[item] !== "undefined" && dataobj.links.link[item] != null
-            && (dataobj.links.link[item]["@page"] === "date"
-            || dataobj.links.link[item]["@page"] === "alpha"
-            || dataobj.links.link[item]["@page"] === "relevance")) {
-            resultobj["sort"].push(dataobj.links.link[item]);
-          } else {
-            var linkobj = new Object();
-            linkobj['pageName'] = dataobj.links.link[item]["@page"];
-            linkobj['pageNo'] = getParam('page', dataobj.links.link[item]["@url"]);
-            linkobj['url'] = dataobj.links.link[item]["@url"]
-            resultobj["pages"].push(linkobj);
-          }
-
-        }
-      }
-      return resultobj;
-    };
-
     // Moved this functions from old code to here to perform search
     // read the result object and return useful vals depending on if ES or SOLR
     // returns an object that contains things like ["data"] and ["facets"]
     this.parseResults = function(dataobj, facetMap) {
-      var resultobj = new Object();
-      resultobj["records"] = new Array();
+      var resultobj = {};
+      resultobj["records"] = [];
       resultobj["start"] = "";
 
       resultobj["found"] = "" + dataobj.hits.found || "0";

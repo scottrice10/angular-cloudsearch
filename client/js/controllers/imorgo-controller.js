@@ -75,7 +75,6 @@ angular.module('imorgo.controller', [])
         var urlParams = imorgoService.getUrlParams(searchUrl, $scope.query, $scope.facetFields, $scope.filterFields, $scope.sortField, $scope.start);
         imorgoFactory.getResponseData(urlParams).success(function(searchResults) {
           $scope.parsedSearchResults = imorgoService.parseResults(searchResults, $scope.facetMap);
-          $scope.parsedLinks = imorgoService.parseLinks(searchResults);
           $scope.startedSearch = true;
           $scope.inputClass.name = "ngCustomInput col-sm-6 col-md-6 col-md-offset-2";
         }).error(function(err) {
