@@ -1,8 +1,8 @@
 'use strict';
 // CONTROLLER
 angular.module('imorgo.controller', [])
-  .controller('imorgoController', ['$rootScope', '$scope', '$http', '$location', 'imorgoService', 'imorgoFactory', 'facetFactory', '$q', '$timeout', '$sce',
-    function($rootScope, $scope, $http, $location, imorgoService, imorgoFactory, facetFactory, $q, $timeout, $sce) {// 'autoCompleteFactory',
+  .controller('imorgoController', ['$rootScope', '$scope', '$http', '$location', 'imorgoService', 'imorgoFactory', 'facetFactory', '$q', '$timeout',
+    function($rootScope, $scope, $http, $location, imorgoService, imorgoFactory, facetFactory, $q, $timeout) {// 'autoCompleteFactory',
 
       var searchUrl = '/api/search';
       var autoSuggestUrl = searchUrl;
@@ -23,7 +23,7 @@ angular.module('imorgo.controller', [])
       $scope.topHtml = "";
       $scope.startedSearch = false;
       $scope.initAds = 1;
-      $scope.dataMap = new Object();
+      $scope.dataMap = {};
       $scope.inputClass = {};
       $scope.inputClass.name = "ngCustomInput col-sm-8 col-md-8 col-md-offset-2";
 
@@ -91,16 +91,6 @@ angular.module('imorgo.controller', [])
         var direction = isAscending ? " asc" : " desc";
         $scope.sortField = field + direction;
         $scope.doSearch();
-      };
-
-      // adjust how many results are shown
-      $scope.howmany = function() {
-        var newhowmany = prompt('Currently displaying ' + $scope.pageSize + ' results per page. How many would you like instead?');
-        if(newhowmany) {
-          $scope.pageSize = parseInt(newhowmany);
-          $scope.from = 0;
-          $scope.dosearch();
-        }
       };
 
       // Function for search by filter.
