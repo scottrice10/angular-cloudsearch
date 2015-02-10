@@ -20,49 +20,47 @@ router.get('/api/search', function(req, res) {
   params.start = req.query.start || 0;
   params.partial = true;
 
-  if(typeof req.query.q === "undefined" || req.query.fields) {
+  if(typeof req.query.q === "undefined" || req.query.filters) {
     params.queryParser = 'simple';
 
-    params.query = function() {
-      var queryString;
-      if(req.query.q || req.query.filters) {
-        queryString = req.query.q ? "?q='" + req.query.q + "'*" : "~1";
-      } else {
-        params.queryParser = 'structured';
-        queryString = "(matchall)";
-      }
+    // build text query
+    if(req.query.q || req.query.filters) {
+      params.query = req.query.q ? req.query.q + "*" : "~1";
+    } else {
+      params.queryParser = 'structured';
+      params.query = "(matchall)";
+    }
 
-      if(req.query.filters) {
-        var filtersArray = JSON.parse(req.query.filters);
-        var filterHolder = {};
-        filtersArray.forEach(function(filter) {
-          //group filters by term
-          if(filterHolder[filter.term] && filterHolder[filter.term].length > 0){
-            filterHolder[filter.term].push(filter.value);
-          } else {
-            filterHolder[filter.term] = [];
-            filterHolder[filter.term].push(filter.value);
-          }
-        });
-
-        params.filterQuery = "(and ";
-        for(var key in filterHolder){
-          params.filterQuery += "(or ";
-          filterHolder[key].forEach(function(value){
-            params.filterQuery += key + ":'" + value + "' ";
-          });
-          params.filterQuery += ") ";
+    //build facet query
+    if(req.query.filters) {
+      var filtersArray = JSON.parse(req.query.filters);
+      var filterHolder = {};
+      filtersArray.forEach(function(filter) {
+        //group filters by term
+        if(filterHolder[filter.term] && filterHolder[filter.term].length > 0) {
+          filterHolder[filter.term].push(filter.value);
+        } else {
+          filterHolder[filter.term] = [];
+          filterHolder[filter.term].push(filter.value);
         }
-        params.filterQuery += ")";
-      }
+      });
 
-      return queryString;
-    }();
+      params.filterQuery = "(and ";
+      for(var key in filterHolder) {
+        params.filterQuery += "(or ";
+        filterHolder[key].forEach(function(value) {
+          params.filterQuery += key + ":'" + value + "' ";
+        });
+        params.filterQuery += ") ";
+      }
+      params.filterQuery += ")";
+    }
   } else {
     params.query = req.query.q + "*";
     params.queryParser = 'simple';
   }
 
+  // add sorting parameter
   if(typeof req.query.sort !== "undefined") {
     params.sort = req.query.sort;
   }
