@@ -30,6 +30,7 @@
   },
   "scripts": {
     "start": "node server.js",
+    "test": "gulp test",
     "postinstall": "./node_modules/bower/bin/bower install"
   },
   "private": true

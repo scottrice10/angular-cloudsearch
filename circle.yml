@@ -1,0 +1,9 @@
+machine:
+  node:
+    version: 0.10.22
+
+test:
+  pre:
+    - npm install -g karma
+    - npm install -g bower
+    - bower install
