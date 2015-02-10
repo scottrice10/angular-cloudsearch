@@ -21,33 +21,45 @@ router.get('/api/search', function(req, res) {
   params.partial = true;
 
   if(typeof req.query.q === "undefined" || req.query.fields) {
-    params.queryOptions = '{"defaultOperator": "or"}';
-    params.queryParser = 'structured';
+    params.queryParser = 'simple';
 
     params.query = function() {
-      var queryString = "(or ";
+      var queryString;
       if(req.query.q || req.query.filters) {
-        var query = req.query.q ? "prefix '" + req.query.q + "'" : "";
-        queryString += query;
+        queryString = req.query.q ? "?q='" + req.query.q + "'*" : "~1";
       } else {
-        queryString += "matchall";
+        params.queryParser = 'structured';
+        queryString = "(matchall)";
       }
 
       if(req.query.filters) {
         var filtersArray = JSON.parse(req.query.filters);
-        queryString += "(and ";
+        var filterHolder = {};
         filtersArray.forEach(function(filter) {
-          queryString += "(term field=" + filter.term + " '" + filter.value + "')"
+          //group filters by term
+          if(filterHolder[filter.term] && filterHolder[filter.term].length > 0){
+            filterHolder[filter.term].push(filter.value);
+          } else {
+            filterHolder[filter.term] = [];
+            filterHolder[filter.term].push(filter.value);
+          }
         });
-        queryString += ")";
+
+        params.filterQuery = "(and ";
+        for(var key in filterHolder){
+          params.filterQuery += "(or ";
+          filterHolder[key].forEach(function(value){
+            params.filterQuery += key + ":'" + value + "' ";
+          });
+          params.filterQuery += ") ";
+        }
+        params.filterQuery += ")";
       }
 
-      queryString += ")";
       return queryString;
     }();
   } else {
     params.query = req.query.q + "*";
-    params.queryOptions = '{"defaultOperator": "or"}';
     params.queryParser = 'simple';
   }
 
@@ -73,6 +85,7 @@ router.get('/api/search', function(req, res) {
     }()
   }
 
+  console.log(params);
   cloudsearchdomain.search(params, function(err, data) {
     if(err) {
       res.json(err);

@@ -48,7 +48,7 @@ angular.module('imorgo.controller', [])
             $scope.startedSearch = true;
             $scope.facetMap = data;
             $scope.facetFields = [];
-            $scope.facetMap.facets.forEach(function(facet) {
+            $scope.facetMap.facetFilters.forEach(function(facet) {
               $scope.facetFields.push(facet.field);
             });
 

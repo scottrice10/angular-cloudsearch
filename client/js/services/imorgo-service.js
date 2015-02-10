@@ -57,14 +57,23 @@ angular.module('imorgo.service', [])
         });
       }
 
-      resultobj["facets"] = dataobj.facets;
-      for(var key in resultobj.facets){
-        if(facetMap){
-          facetMap.facets.forEach(function(jsonFacet){
-            if(key === jsonFacet.field){
-              resultobj.facets[key].label = jsonFacet.display;
+      resultobj["facets"] = facetMap.facets;
+      for(var localKey in resultobj.facets){
+        var localFacet = resultobj.facets[localKey];
+
+        if(dataobj){
+          for(var cloudSearchKey in dataobj.facets){
+            var cloudSearchFacet = dataobj.facets[cloudSearchKey];
+            if(localKey === cloudSearchKey){
+              cloudSearchFacet.buckets.forEach(function(cloudSearchBucket){
+                localFacet.buckets.forEach(function(localBucket){
+                  if(cloudSearchBucket.value === localBucket.value){
+                    cloudSearchBucket.count ? localBucket.count = cloudSearchBucket.count : '';
+                  }
+                });
+              });
             }
-          });
+          }
         }
       }
 
