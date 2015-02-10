@@ -5,7 +5,7 @@
 <div class="row-fluid">
     <div>
         <div ng-show="content.fields.premium_adult_individual_age_27[0]">
-            Monthly Premium: <span class="field-value">{{content.fields.premium_adult_individual_age_27 | currency:"$" }}</span>
+            Monthly Premium: <span class="field-value">{{content.fields.premium_adult_individual_age_27[0] | currency:"$" }}</span>
         </div>
         <div ng-show="content.fields.issuer_name[0]">
             Provider: <span class="field-value">{{content.fields.issuer_name[0]}}</span>
