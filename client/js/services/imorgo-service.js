@@ -57,7 +57,10 @@ angular.module('imorgo.service', [])
         });
       }
 
-      resultobj["facets"] = facetMap.facets;
+      if(facetMap && facetMap.facets){
+        resultobj["facets"] = facetMap.facets;
+      }
+
       for(var localKey in resultobj.facets){
         var localFacet = resultobj.facets[localKey];
 
