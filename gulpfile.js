@@ -7,7 +7,8 @@
     jshint = require('gulp-jshint'),
     livereload = require('gulp-livereload'),
     _paths = ['server/**/**', 'client/js/*.js'],
-    _lint = ['client/js/*.js'];
+    _lint = ['client/js/*.js'],
+    shell = require('gulp-shell');
 
   //register nodemon task
   gulp.task('nodemon', function() {
@@ -38,6 +39,10 @@
       .pipe(jshint())
       .pipe(jshint.reporter('default'));
   });
+
+  gulp.task('test', shell.task([
+    'karma start'
+  ]));
 
   // The default task (called when you run `gulp` from cli)
   gulp.task('default', ['lint', 'nodemon', 'watch']);

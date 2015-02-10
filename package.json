@@ -22,15 +22,33 @@
     "gulp": "^3.8.7",
     "gulp-jshint": "^1.8.4",
     "gulp-livereload": "^2.1.1",
+    "gulp-watch": "^0.6.9",
+    "browser-sync": "^1.5.7",
+    "clone-stats": "0.0.1",
+    "expect.js": "^0.3.1",
+    "gulp": "^3.8.5",
+    "gulp-if": "^1.2.5",
+    "gulp-karma": "0.0.4",
     "gulp-nodemon": "^1.0.4",
-    "gulp-watch": "^0.6.9"
+    "gulp-shell": "^0.2.7",
+    "jshint-stylish": "^0.2.0",
+    "karma": "^0.12.16",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-cli": "0.0.4",
+    "karma-jasmine": "^0.1.5",
+    "karma-mocha": "^0.1.4",
+    "karma-nested-reporter": "^0.1.1",
+    "karma-nyan-reporter": "0.0.43",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-unicorn-reporter": "^0.1.4",
+    "mocha": "^1.20.1"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
     "start": "node server.js",
-    "test": "gulp test",
+    "test": "karma start --browsers PhantomJS",
     "postinstall": "./node_modules/bower/bin/bower install"
   },
   "private": true

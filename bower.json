@@ -11,6 +11,7 @@
     "angular-route": "*",
     "angular-resource": "*",
     "angular-sanitize": "*",
-    "angular-utils-pagination": "*"
+    "angular-utils-pagination": "*",
+    "angular-mocks": "*"
   }
 }

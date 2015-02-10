@@ -96,11 +96,13 @@ angular.module('imorgo.service', [])
 
       resultobj["facets"] = dataobj.facets;
       for(var key in resultobj.facets){
-        facetMap.facets.forEach(function(jsonFacet){
-          if(key === jsonFacet.field){
-            resultobj.facets[key].label = jsonFacet.display;
-          }
-        });
+        if(facetMap){
+          facetMap.facets.forEach(function(jsonFacet){
+            if(key === jsonFacet.field){
+              resultobj.facets[key].label = jsonFacet.display;
+            }
+          });
+        }
       }
 
       return resultobj;

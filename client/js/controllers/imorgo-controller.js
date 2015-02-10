@@ -8,7 +8,6 @@ angular.module('imorgo.controller', [])
       var autoSuggestUrl = searchUrl;
 
       $scope.facetFields = "";
-
       $scope.filterFields = "";
       $scope.selectedItems = [];
       $scope.from = 0;

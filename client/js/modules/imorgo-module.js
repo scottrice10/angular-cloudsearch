@@ -32,7 +32,7 @@ angular.module('imorgoModule', [
   .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
-        title: 'imorgo Faceted Search',
+        title: 'imorgo',
         templateUrl: 'views/main.html',
         controller: 'imorgoController'
       })
