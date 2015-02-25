@@ -1,7 +1,3 @@
-/**
- * Created by cselvaraj on 4/29/14.
- */
-
 'use strict';
 
 var KEYS = {
