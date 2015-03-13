@@ -49,7 +49,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "karma start --browsers PhantomJS",
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "postinstall": "./node_modules/bower/bin/bower install --allow-root"
   },
   "private": true
 }

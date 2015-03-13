@@ -7,4 +7,5 @@ git clone https://github.com/scottrice10/angular-cloudsearch.git
 
 cd angular-cloudsearch
 
-nodejs server.js
+npm install
+npm start
