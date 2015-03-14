@@ -7,5 +7,5 @@ git clone https://github.com/scottrice10/angular-cloudsearch.git
 
 cd angular-cloudsearch
 
-npm install
-npm start
+npm install --unsafe-perm
+nodejs server.js
